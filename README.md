@@ -1,10 +1,33 @@
 # ECE-461-Team-20-Repo
-Software Engineer Purdue ECE 461 Semester Project.
+ECE 461 Semester Project.
 
-Akash test
-Nicholas test 
-Charlie test
-Alison test
+## Team Members
+Akash Amalarasan<br>
+Charlie Kim<br>
+Alison Liang<br>
+Nicholas Tanzillo
 
-Team Members: Alison, Akash, Charlie, Nicholas (pull request step)
+## Setup Environment
+TODO
+* note: should develop on eceprog/comp since this is where it'll be tested. 
+    * instructions for connecting to [Purdue VPN](https://it.purdue.edu/services/vpn.php)
 
+
+
+## Available Commands
+
+```bash
+# install all dependencies for the project.
+./run install
+```
+
+```bash
+# test a single file.
+./run <absolute_path_to_file>
+```
+
+```bash
+# testing (personal tests and code coverage).
+./run test
+
+```
