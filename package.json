@@ -6,7 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Alison",
+  "author": "Alison, Akash, Charlie, Nicholas.",
   "license": "ISC",
-  "dependencies": {}
+  "keywords": [],
+  "dependencies": {
+    "axios": "^1.7.7",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "typescript": "^5.6.2"
+  }
 }

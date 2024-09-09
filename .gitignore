@@ -1,2 +1,4 @@
 # files to ignore - these are temporary files created during the build process or credentials that should not be shared.
 .env
+node_modules/
+index.js
