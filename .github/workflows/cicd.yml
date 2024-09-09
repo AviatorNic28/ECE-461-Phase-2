@@ -25,7 +25,7 @@ jobs:
         run: npm install
 
       - name: Lint code
-        run: npm run lint
+        run: npm i -g lint
 
       - name: Type check
         run: npm run type-check
