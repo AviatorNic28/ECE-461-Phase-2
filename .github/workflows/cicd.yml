@@ -27,8 +27,9 @@ jobs:
       - name: Lint code
         run: npm i -g lint
 
-      - name: Run tests
-        run: npm test
+      # no tests yet-- uncomment when tests are written
+      # - name: Run tests
+      #   run: npm test
 
       - name: Build project
         run: npm run build
