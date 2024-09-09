@@ -20,9 +20,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-      
-      - name: Initialization
-        run: npm init
 
       - name: Install dependencies
         run: npm install
@@ -32,7 +29,8 @@ jobs:
 
       # no tests yet-- uncomment when tests are written
       # - name: Run tests
-      #   run: npm test
+      #   run: npm run test
 
-      - name: Build project
-        run: npm build
+      # no build yet-- uncomment when tests are written
+      # - name: Build project
+      #   run: npm run build
