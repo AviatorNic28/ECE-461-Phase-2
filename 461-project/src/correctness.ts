@@ -56,5 +56,6 @@ export const calculateCorrectness = async (owner: string, repo: string, octokit:
 
   } catch (error) {
     console.error('Error calculating Correctness:', error);
+    console.log('Error retrieving Correctness');
   }
 };
