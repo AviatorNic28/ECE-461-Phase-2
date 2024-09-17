@@ -2,7 +2,7 @@ import readline from 'readline';
 import { Octokit } from '@octokit/rest';
 import { calculateResponsiveness } from './responsiveness';
 import { calculateCorrectness } from './correctness';
-import { calculateBusFactor } from './busFactor';
+import { calculateBusFactor } from './busfactor';
 
 // Create readline interface
 const rl = readline.createInterface({
