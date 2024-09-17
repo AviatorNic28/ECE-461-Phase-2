@@ -1,15 +1,18 @@
 import { Octokit } from '@octokit/rest';
+import moment from 'moment';
 
 export const calculateCorrectness = async (owner: string, repo: string, octokit: Octokit) => {
   console.log('Running Correctness metric...');
   
   try {
+    // Fetch the package.json file from the repository
     const repoResponse = await octokit.repos.getContent({
       owner,
       repo,
       path: 'package.json',
     });
 
+    // Check for the presence of tests in package.json
     if (!Array.isArray(repoResponse.data) && 'content' in repoResponse.data) {
       const packageJson = Buffer.from(repoResponse.data.content, 'base64').toString('utf-8');
       const packageData = JSON.parse(packageJson);
@@ -27,9 +30,31 @@ export const calculateCorrectness = async (owner: string, repo: string, octokit:
     } else {
       console.log(`Could not find package.json in repository "${owner}/${repo}".`);
     }
+
+    // Fetch the number of open issues
+    const issuesResponse = await octokit.issues.listForRepo({
+      owner,
+      repo,
+      state: 'open',
+    });
+
+    const openIssues = issuesResponse.data;
+    const openIssuesCount = openIssues.length;
+    console.log(`The repository "${owner}/${repo}" has ${openIssuesCount} open issues.`);
+
+    // Find the 3 longest open issues
+    if (openIssuesCount > 0) {
+      const sortedIssues = openIssues.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+      const longestOpenIssues = sortedIssues.slice(0, 3);
+
+      console.log(`Longest open issues (up to 3):`);
+      longestOpenIssues.forEach(issue => {
+        const openFor = moment(issue.created_at).fromNow(true); // e.g., '3 months'
+        console.log(`#${issue.number} - ${issue.title} (open for ${openFor})`);
+      });
+    }
+
   } catch (error) {
     console.error('Error calculating Correctness:', error);
-    console.log('Error retrieving Correctness');
   }
 };
-
