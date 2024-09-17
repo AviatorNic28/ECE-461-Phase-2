@@ -6,6 +6,12 @@ Nicholas test
 Alison test
 charlie test
 
+Team Members: Alison, Akash, Charlie, Nicholas (pull request step)
+
+"Ramp-up time measures" documentation complexity and the number of contributions/contributors.
+  - "Correctness" is based on "Ramp-up time" goals. We will do testing as needed to measure our project's "Correctness."
+
+
 -
 
 Bus Factor = how many people are working on the project (sort of) and the higher the bus factor is the better. apparently its called that because of the possibility of the devs getting hit by a bus? anyway its related to the count of the contributions of the contributors and their distribution (what a mouthful lol)
@@ -24,7 +30,9 @@ this calculates responsiveness by looking at the time difference between when an
 Correctness = checks the validity of the repo by seeing how many open issues it has and whether it has tests in it. if it has low open issues and tests exist, it's probably working decently.
 
 this calculates correctness by seeing how many open issues it has and whether it's got test files/scripts (by checking references to testing frameworks like mocha/jest/chai in the package.json). this could be improved upon.
-as of right now it runs checks in package.json for testing frameworks. i dont think it checks for the amount of open issues but i may add to that later! we would need to finalise a way to properly calculate the correctness of a package though.
+~as of right now it runs checks in package.json for testing frameworks. i dont think it checks for the amount of open issues but i may add to that later! we would need to finalise a way to properly calculate the correctness of a package though.~
+
+added a check for open issue count and it should display the oldest open issues and what they are!
 
 clone the repo and install dependencies by running in git bash
 
