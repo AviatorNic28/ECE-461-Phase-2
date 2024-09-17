@@ -12,7 +12,9 @@ Team Members: Alison, Akash, Charlie, Nicholas (pull request step)
   - "Correctness" is based on "Ramp-up time" goals. We will do testing as needed to measure our project's "Correctness."
 
 
--
+--
+
+Week 3 Changes (Charlie Kim)
 
 Bus Factor = how many people are working on the project (sort of) and the higher the bus factor is the better. apparently its called that because of the possibility of the devs getting hit by a bus? anyway its related to the count of the contributions of the contributors and their distribution (what a mouthful lol)
 
