@@ -1,16 +1,23 @@
 # ECE-461-Team-20-Repo
-Software Engineer Purdue ECE 461 Semester Project.
+ECE 461 Semester Project.
 
-Akash test
-Nicholas test
-Alison test
-charlie test
+## Team Members
+Akash Amalarasan<br>
+Charlie Kim<br>
+Alison Liang<br>
+Nicholas Tanzillo
 
-Team Members: Alison, Akash, Charlie, Nicholas (pull request step)
+```
 
-"Ramp-up time measures" documentation complexity and the number of contributions/contributors.
+## Notes
+* "Ramp-up time measures" documentation complexity and the number of contributions/contributors.
   - "Correctness" is based on "Ramp-up time" goals. We will do testing as needed to measure our project's "Correctness."
-
+* [syntax checker](https://piazza.com/class/lzvpabcdwx83b0/post/52)
+* [Project Plan](https://docs.google.com/document/d/1XzcjSY4iD0JeGCp3_8yb3W4f8O1s0HRK7Ix6pg2Zano/edit#heading=h.dv1pr3855kek)
+* [Phase 1 SPEC](https://purdue.brightspace.com/d2l/le/content/1096370/viewContent/17430281/View)
+* [GitHub REST API Docs](https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api?apiVersion=2022-11-28)
+* [Coding Examples](Examples.md)
+* [TypeScript Basics](https://www.w3schools.com/typescript/typescript_intro.php)
 
 --
 
@@ -55,4 +62,3 @@ run the tool using
 or you can just use the .exe file i packaged! note that the file was packaged with the default shipped version of the files, so if you want to repackage all that stuff into an updated .exe, run these commands after building:
 
 ```pkg . --targets node16-win-x64,node16-macos-x64,node16-linux-x64 --output 461-project```
-
