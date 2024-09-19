@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",           // Output directory for compiled JS files
+    "rootDir": "./src",           // Source directory for TypeScript files
+    "module": "commonjs",         // Module system for Node.js
+    "target": "es6",              // ECMAScript target version
+    "esModuleInterop": true,      // Importing CommonJS modules
+    "strict": true,               // Strict type checking options
+    "resolveJsonModule": true,     // Allows importing of JSON files
+    "moduleResolution": "node"    // Resolve Node.js modules
+  },
+  "include": ["src/**/*.ts"],      // Include all TS files in src directory
+  "exclude": ["node_modules", "dist"] // Exclude unnecessary directories
+}
