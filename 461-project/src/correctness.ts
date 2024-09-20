@@ -10,19 +10,22 @@ interface MetricResult {
 }
 
 export const calculateCorrectness = async (owner: string, repo: string, octokit: Octokit): Promise<MetricResult> => {
+  // get log level
   const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
   if (currentLogLevel === LogLevel.INFO) {
     logger.info('Running Correctness metric...');
   }
 
-  const startTime = performance.now(); // Start measuring time
+  // begin tracking latency
+  const startTime = performance.now();
+
 
   let correctness = 0;
-  const possibleTestDirs = ['test', 'tests', 'spec', '__tests__', 'Test', 'Tests'];
+  const possibleTestDirs = ['test', 'tests', 'spec', '__tests__', 'Test', 'Tests']; // directories where tests may be.
   let testDirFound = false;
 
   try {
-    // Check for each possible test directory
+    // check if test directory exists.
     for (const dir of possibleTestDirs) {
       try {
         const repoResponse = await octokit.repos.getContent({
@@ -32,11 +35,15 @@ export const calculateCorrectness = async (owner: string, repo: string, octokit:
         });
 
         if (Array.isArray(repoResponse.data) && repoResponse.data.length > 0) {
-          logger.info(`The repository "${owner}/${repo}" contains a '${dir}' directory.`);
+          if(currentLogLevel == LogLevel.INFO) {
+            logger.info(`The repository "${owner}/${repo}" contains a '${dir}' directory.`);
+          }
+          
           testDirFound = true;
-          // possibily implement better calculation method for correctness.
-          correctness += 1; // Increment correctness if any test directory is present
-          break; // Exit the loop once a test directory is found
+          correctness += 1;
+          
+          // exit once we find a valid test directory.
+          break; 
         }
       } catch (error) {
         // Continue to the next directory to check.
@@ -44,7 +51,9 @@ export const calculateCorrectness = async (owner: string, repo: string, octokit:
     }
 
     if (!testDirFound) {
-      logger.info(`No recognized test directory found in repository "${owner}/${repo}".`);
+      if(currentLogLevel == LogLevel.DEBUG) {
+        logger.debug(`No recognized test directory found in repository "${owner}/${repo}".`); 
+      }
     }
 
     // Fetch the number of open issues
@@ -56,33 +65,53 @@ export const calculateCorrectness = async (owner: string, repo: string, octokit:
 
     const openIssues = issuesResponse.data;
     const openIssuesCount = openIssues.length;
-    logger.info(`The repository "${owner}/${repo}" has ${openIssuesCount} open issues.`);
+    if(currentLogLevel == LogLevel.INFO ) {
+      logger.info(`The repository "${owner}/${repo}" has ${openIssuesCount} open issues.`);
+    }
 
-    // Deduct 0.01 from correctness score per open issue
-    correctness -= openIssuesCount * 0.01;
+    // deduct from correctness score as needed. 
+    if(openIssuesCount >= 60) {
+      correctness -= .8;
+    } else if(openIssuesCount >= 40) {
+      correctness -= .6;
+    } else if(openIssuesCount >= 20) {
+      correctness -= .4;
+    } else if(openIssuesCount >= 10) {
+      correctness -= .2;
+    }
 
     // Find the 3 longest open issues
     if (openIssuesCount > 0) {
       const sortedIssues = openIssues.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
       const longestOpenIssues = sortedIssues.slice(0, 3);
-
-      logger.info('Longest open issues (up to 3):');
+      
+      if(currentLogLevel == LogLevel.INFO) {
+        logger.info('Longest open issues (up to 3):');
+      }
       longestOpenIssues.forEach(issue => {
         const openFor = moment(issue.created_at).fromNow(true); // e.g., '3 months'
+        if(currentLogLevel == LogLevel.DEBUG) {
         logger.info(`#${issue.number} - ${issue.title} (open for ${openFor})`);
+        }
       });
     }
 
   } catch (error) {
-    logger.error('Error calculating Correctness:', error);
-    logger.info('Error retrieving Correctness');
+    if(currentLogLevel == LogLevel.DEBUG) {
+      logger.error('Error calculating Correctness:', error);
+    }
+      return {
+        correctness : -1,
+        correctness_latency : -1,
+      }
   }
 
-  const endTime = performance.now(); // End measuring time
-  const latency = (endTime - startTime) / 1000; // Calculate latency (seconds)
+  // calculate latency (seconds).
+  const endTime = performance.now();
+  const latency = (endTime - startTime) / 1000;
 
   return {
-    correctness: Math.max(correctness, 0), // Ensure correctness doesn't go negative
+    correctness: Math.max(correctness, 0),
     correctness_latency: latency,
   };
 };

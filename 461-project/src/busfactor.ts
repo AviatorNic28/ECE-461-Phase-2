@@ -10,12 +10,14 @@ interface metricResult {
 }
 
 export const calculateBusFactor = async (owner: string, repo: string, threshold: number = 50, octokit: Octokit): Promise<metricResult> => {
+  // first get log level. 
   const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
   if(currentLogLevel == LogLevel.INFO) {
-    console.log('Running Bus Factor metric...'); 
+    logger.info('Running Bus Factor metric...')
   }
 
-  const startTime = performance.now(); // Start measuring time
+  // begin tracking latency. 
+  const startTime = performance.now();
   let busFactor = 0;
 
   try {
@@ -51,11 +53,12 @@ export const calculateBusFactor = async (owner: string, repo: string, threshold:
     }
 
     if(currentLogLevel == LogLevel.INFO) {
-    console.log(`Bus Factor for repository "${owner}/${repo}" is: ${busFactor}`);
+      logger.info(`Bus Factor for repository "${owner}/${repo}" is: ${busFactor}`)
     }
   } catch (error) {
-    console.error('Error calculating Bus Factor:', error);
-    console.log('Error retrieving Bus Factor');
+    if(currentLogLevel == LogLevel.DEBUG) {
+      logger.debug('Error calculating Bus Factor:', error);
+    }
     
     return {
       busfactor : -1,
@@ -64,8 +67,8 @@ export const calculateBusFactor = async (owner: string, repo: string, threshold:
   
   }
 
-  // scale busFactor metric between 0 and 1. 
-  // SCALE: people <= 2 : 0 , people <= 4 : .25 , people <= 6 : .5 , people <= 8 : .75 , else : 1. 
+  // SCALE busfactor between 0 and 1 
+  // people <= 2 : 0 , people <= 4 : .25 , people <= 6 : .5 , people <= 8 : .75 , else : 1. 
   let scaledBusFactor = -1; 
   if(busFactor <= 2) {
     scaledBusFactor = 0;
@@ -79,8 +82,9 @@ export const calculateBusFactor = async (owner: string, repo: string, threshold:
     scaledBusFactor = 1;
   }
 
-  const endTime = performance.now(); // End measuring time
-  const latency = (endTime - startTime) / 1000; // Calculate latency (seconds)
+  // calculate latency (seconds)
+  const endTime = performance.now();
+  const latency = (endTime - startTime) / 1000;
   
   return {
     busfactor: scaledBusFactor,

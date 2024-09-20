@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
 import * as fs from 'fs';
-import { Octokit } from '@octokit/rest'; // Import Octokit
+import { Octokit } from '@octokit/rest';
 import { calculateResponsiveness } from './responsiveness';
 import { calculateCorrectness } from './correctness';
 import { calculateBusFactor } from './busfactor';
@@ -19,32 +19,38 @@ const installDependencies = () => {
 
   exec('npm install', (error, stdout, stderr) => {
     if (error) {
-      console.error(`Failed to install dependencies: ${stderr}`);
+      if(currentLogLevel == LogLevel.DEBUG) {
+        logger.debug(`Failed to install dependencies: ${stderr}`)
+      }
       process.exit(1);
     }
-    console.log(stdout);
     process.exit(0);
   });
 };
 
-// Function to process URLs and calculate metrics. 
-const processUrls = async (urlFile: string, token: string) => {
-  // including check here again, in case we want to be able to test functions independently. 
+// Function to calculate Metrics.
+// (handles parsing urls, calculating metrics, and displaying them to the console.)
+const calculateMetrics = async (urlFile: string, token: string) => {
+  const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
+
+  // check if the file exists. 
   if (!fs.existsSync(urlFile)) {
-    console.error(`URL file does not exist: ${urlFile}`);
+    if(currentLogLevel == LogLevel.DEBUG) {
+      logger.debug(`URL file does not exist: ${urlFile}`);
+    }
     process.exit(1);
   }
 
+  // get urls and setup octokit instance. 
   const urls = fs.readFileSync(urlFile, 'utf-8').split('\n').filter(Boolean);
-  
-  // Initialize Octokit
   const octokit = new Octokit(token ? { auth: token } : {}); 
  
+  // process each url. 
   for (const url of urls) {
     const [owner, repo] = extractOwnerAndRepo(url);
-    
     if (owner && repo) {
       try {
+
         // Run all metric calculations in parallel
         const [
           { responsiveness, responsiveness_latency },
@@ -88,13 +94,19 @@ const processUrls = async (urlFile: string, token: string) => {
         }));
 
       } catch (error) {
-        console.error(`Error processing repository ${owner}/${repo}:`, error);
+        if(currentLogLevel == LogLevel.DEBUG) {
+          logger.debug(`Error processing repository ${owner}/${repo}:`, error);
+        }
       }
 
     } else {
-      console.error(`Invalid URL format: ${url}`);
+      if(currentLogLevel == LogLevel.DEBUG) {
+        logger.debug(`Invalid URL format: ${url}`);
+      }
     }
   }
+
+  // successful run. 
   process.exit(0);
 };
 
@@ -107,8 +119,12 @@ const extractOwnerAndRepo = (url: string): [string | null, string | null] => {
 
 // Function to run tests
 const runTests = () => {
-  console.log("Running tests...");
-  // This is where you'd call your test framework
+  const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
+  if(currentLogLevel == LogLevel.INFO) {
+    console.log("Running tests...");
+  }    
+
+  // to implement
   const testCasesPassed = 20; // Mock value
   const totalTestCases = 25; // Mock value
   const lineCoverage = 85; // Mock value
@@ -120,18 +136,18 @@ const runTests = () => {
 const main = () => {
   const [,, command, _] = process.argv;
 
-  // Check if token is provided for the URL processing
+  // get log level and github token. 
   const token = process.env.GITHUB_TOKEN || ''; // Use environment variable or empty string
   const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
 
-  // Function to validate the GitHub token
+  // function to validate the GitHub Token.
   const validateToken = async (token: string): Promise<boolean> => {
     const octokit = new Octokit({ auth: token });
     try {
       await octokit.rest.users.getAuthenticated();
       return true; // Token is valid
     } catch (error) {
-      console.error('Invalid GitHub token:');
+      console.error('Invalid GitHub token.');
       return false; // Token is invalid
     }
   };
@@ -145,18 +161,23 @@ const main = () => {
       runTests();
       break;
     default:
-      // assuming the command is the URL_FILE, first checking if it exists. 
+      // assuming the "command" is the path to the URL_FILE.
+      
+      // check valid fie path.  
       if (!fs.existsSync(command)) {
+        if(currentLogLevel == LogLevel.DEBUG) {
           console.error(`URL file does not exist: ${command}`);
-          process.exit(1);
         }
+        process.exit(1);
+      }
         
-        // also assert a valid gitHub token.
+        // check valid gitHub token.
         if (!validateToken(token)) {
           process.exit(1);
         }
-
-      processUrls(command, token);
+      
+      // processUrls
+      calculateMetrics(command, token);
   }
 };
 
