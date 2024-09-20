@@ -4,6 +4,8 @@ import { Octokit } from '@octokit/rest'; // Import Octokit
 import { calculateResponsiveness } from './responsiveness';
 import { calculateCorrectness } from './correctness';
 import { calculateBusFactor } from './busfactor';
+import { calculateLicenseCompatibility } from './license_compatibility';
+import { calculateRampUpTime } from './rampup_time';
 
 // Function to install dependencies
 const installDependencies = () => {
@@ -35,25 +37,19 @@ const processUrls = async (urlFile: string, token: string) => {
     const [owner, repo] = extractOwnerAndRepo(url);
     
     if (owner && repo) {
-      // Call your metric functions here
-      //const responsiveness = await calculateResponsiveness(owner, repo, octokit);
-      //const correctness = await calculateCorrectness(owner, repo, octokit);
-      //const busFactor = await calculateBusFactor(owner, repo, 50, octokit);
-      
-      const responsiveness = -1;
-      const correctness = -1;
-      const busFactor = -1;
+      // these should all return floats. 
+      const { responsiveness, responsiveness_latency } = await calculateResponsiveness(owner, repo, octokit);
+      const { correctness, correctness_latency } = await calculateCorrectness(owner, repo, octokit);
+      const { busfactor, busfactory_latency } = await calculateBusFactor(owner, repo, 50, octokit);
+      const { license, license_latency } = await calculateLicenseCompatibility(owner, repo, 50, octokit);
+      const { rampup, rampup_latency } = await calculateRampUpTime(owner, repo, 50, octokit); 
 
-      // to be implemented. 
-      const netscore = 0; // will implement (needs to be between 0 and 1 though) 
-      const netscore_latency = -1; 
-      const rampup = -1;
-      const rampup_latency = -1;
-      const correctness_latency = -1;
-      const busfactory_latency = -1;
-      const responsiveness_latency = -1;
-      const license = -1;
-      const license_latency = -1; 
+      // do some error checking here if a metric was calculated incorrectly. 
+
+      // netscore calculations. 
+      const netscore = (.40) * responsiveness + (.30) * correctness + (.15) * busfactor + (.10) * rampup + (.05) * license
+      const netscore_latency = responsiveness_latency + correctness_latency + busfactory_latency + rampup_latency + license_latency; 
+
 
       // Output the results in NDJSON format
       console.log(JSON.stringify({ 
@@ -64,7 +60,7 @@ const processUrls = async (urlFile: string, token: string) => {
         RampUp_Latency: rampup_latency,
         Correctness: correctness,
         Correctness_Latency: correctness_latency,
-        BusFactor: busFactor,
+        BusFactor: busfactor,
         BusFactor_Latency: busfactory_latency,
         ResponsiveMaintainer: responsiveness,
         ResponsiveMaintainer_Latency : responsiveness_latency,

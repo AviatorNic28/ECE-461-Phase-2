@@ -1,7 +1,12 @@
 import { Octokit } from '@octokit/rest';
 import moment from 'moment';
 
-export const calculateCorrectness = async (owner: string, repo: string, octokit: Octokit) => {
+interface metricResult {
+  correctness: number
+  correctness_latency: number
+}
+
+export const calculateCorrectness = async (owner: string, repo: string, octokit: Octokit): Promise<metricResult> => {
   console.log('Running Correctness metric...');
   
   try {
@@ -58,4 +63,10 @@ export const calculateCorrectness = async (owner: string, repo: string, octokit:
     console.error('Error calculating Correctness:', error);
     console.log('Error retrieving Correctness');
   }
+
+  return {
+    correctness: 0,
+    correctness_latency: 0,
+  }
+
 };

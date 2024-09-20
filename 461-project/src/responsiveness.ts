@@ -1,7 +1,12 @@
 import { Octokit } from '@octokit/rest';
 import moment from 'moment';
 
-export const calculateResponsiveness = async (owner: string, repo: string, octokit: Octokit) => {
+interface metricResult {
+  responsiveness: number
+  responsiveness_latency: number
+}
+
+export const calculateResponsiveness = async (owner: string, repo: string, octokit: Octokit): Promise<metricResult> => {
   console.log('Running Responsiveness metric...');
   
   try {
@@ -41,12 +46,26 @@ export const calculateResponsiveness = async (owner: string, repo: string, octok
       const averageResponseTimeInHours = averageResponseTimeInMs / (1000 * 60 * 60);
 
       console.log(`Average response time for "${owner}/${repo}" is: ${averageResponseTimeInHours.toFixed(2)} hours`);
+
+      return {
+        responsiveness: averageResponseTimeInHours,
+        responsiveness_latency: averageResponseTimeInMs, 
+      }
+
     } else {
       console.log(`No events found for issues in repository "${owner}/${repo}".`);
+      return {
+        responsiveness: 0,
+        responsiveness_latency: 0,
+      }
     }
   } catch (error) {
     console.error('Error calculating Responsiveness:', error);
     console.log('Error retrieving Responsiveness');
+    return {
+      responsiveness: 0,
+      responsiveness_latency: 0,
+    }
   }
 };
 

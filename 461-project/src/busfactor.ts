@@ -1,7 +1,12 @@
 import { Octokit } from '@octokit/rest';
 
-export const calculateBusFactor = async (owner: string, repo: string, threshold: number = 50, octokit: Octokit) => {
-  console.log('Running Bus Factor metric...');
+interface metricResult {
+  busfactor: number
+  busfactory_latency: number
+}
+
+export const calculateBusFactor = async (owner: string, repo: string, threshold: number = 50, octokit: Octokit): Promise<metricResult> => {
+  console.log('Running Bus Factor metric...');  // could be good for logging purposes. 
 
   try {
     // Fetch contributors from the GitHub repository
@@ -40,5 +45,10 @@ export const calculateBusFactor = async (owner: string, repo: string, threshold:
   } catch (error) {
     console.error('Error calculating Bus Factor:', error);
     console.log('Error retrieving Bus Factor');
+  }
+
+  return {
+    busfactor: 0,
+    busfactory_latency: 0,
   }
 };
