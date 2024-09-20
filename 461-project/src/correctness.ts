@@ -24,7 +24,7 @@ export const calculateCorrectness = async (owner: string, repo: string, octokit:
     const repoResponse = await octokit.repos.getContent({
       owner,
       repo,
-      path: 'package.json',
+      path: 'package.json', // can't seem to find the file package.json ?? - we get a response when no url is used. 
     });
 
     // Check for the presence of tests in package.json
