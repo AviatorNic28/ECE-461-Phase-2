@@ -14,6 +14,7 @@ Nicholas Tanzillo ntanzill@purdue.edu
 * metrics calculated in parallel and metrics are double checked. 
 * desc for purpose of project, configuration details, how to invoke.
 * make sure to move final run executable into project root directory.
+* figure out why it says 40%+ code is JS... all src files are ts; pretty sure it's due to the run.ts file 
 
 ## Notes (remove later)
 * "Ramp-up time measures" documentation complexity and the number of contributions/contributors.
