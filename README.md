@@ -12,7 +12,6 @@ The project aims to develop a command-line interface (CLI) tool for ACME Corpora
 
 
 ## TODO (remove later):
-* Check correctness metric. (not sure what is wrong with it... has to do with calling `octokit.repo.getContent`)
 * cleanup metrics (var names, comments, print statements, etc.) and run in parallel.
 * add 20 test cases (min 1 for each metric), line coverage printed (min 80%).
 * move final run executable into project root.
