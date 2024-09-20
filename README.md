@@ -112,3 +112,35 @@ but the auto-grader will run on eceprog.
       ```bash
       pkg . --targets node16-win-x64,node16-macos-x64,node16-linux-x64 --output 461-project
       ```
+   
+### **7. Make Sure the `run` File is Executable**
+
+1. Ensure you have compiled the TypeScript file into JavaScript (from `/src` to `/dist`):
+   ```bash
+   npm run build
+   ```
+
+2. Rename the compiled JavaScript file `run.js` (from `/dist`) to simply `run`:
+   ```bash
+   mv dist/run.js dist/run
+   ```
+
+3. Make the `run` file executable:
+   ```bash
+   chmod +x dist/run
+   ```
+
+4. Run the `run` executable:
+   ```bash
+   ./dist/run install
+   ./dist/run test
+   ./dist/run /absolute_path/to/url_file.txt
+   ```
+
+### **Environment Setup for Logging** (check over)
+
+- Make sure to set up environment variables for logging:
+   ```bash
+   export LOG_FILE=/path/to/logfile.log
+   export LOG_LEVEL=1  # 0: silent, 1: info, 2: debug
+   ```
