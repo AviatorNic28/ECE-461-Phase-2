@@ -14,7 +14,6 @@ Nicholas Tanzillo
 * [Project Plan](https://docs.google.com/document/d/1XzcjSY4iD0JeGCp3_8yb3W4f8O1s0HRK7Ix6pg2Zano/edit#heading=h.dv1pr3855kek)
 * [Phase 1 SPEC](https://purdue.brightspace.com/d2l/le/content/1096370/viewContent/17430281/View)
 * [GitHub REST API Docs](https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api?apiVersion=2022-11-28)
-* [Coding Examples](Examples.md)
 * [TypeScript Basics](https://www.w3schools.com/typescript/typescript_intro.php)
 
 ---
