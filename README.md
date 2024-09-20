@@ -10,6 +10,7 @@ Nicholas Tanzillo
 ## Notes
 * "Ramp-up time measures" documentation complexity and the number of contributions/contributors.
   - "Correctness" is based on "Ramp-up time" goals. We will do testing as needed to measure our project's "Correctness."
+* [Phase 1 Rubric](https://piazza.com/class/lzvpabcdwx83b0/post/94)
 * [syntax checker](https://piazza.com/class/lzvpabcdwx83b0/post/52)
 * [Project Plan](https://docs.google.com/document/d/1XzcjSY4iD0JeGCp3_8yb3W4f8O1s0HRK7Ix6pg2Zano/edit#heading=h.dv1pr3855kek)
 * [Phase 1 SPEC](https://purdue.brightspace.com/d2l/le/content/1096370/viewContent/17430281/View)
