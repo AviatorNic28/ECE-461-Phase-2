@@ -15,7 +15,6 @@ Nicholas Tanzillo
 * using invalid GitHub Token yields rc 1 & stdout "INVALIDTOKEN"
 * metrics calculated in parallel
 * desc for purpose of project, configuration details, how to invoke.
-* 1 metric uses Rest or GraphQL API.
 
 ## Notes (remove later)
 * "Ramp-up time measures" documentation complexity and the number of contributions/contributors.
