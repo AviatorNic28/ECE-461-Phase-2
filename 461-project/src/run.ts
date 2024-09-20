@@ -38,19 +38,45 @@ const processUrls = async (urlFile: string, token: string) => {
     
     if (owner && repo) {
       // Call your metric functions here
-      const responsiveness = await calculateResponsiveness(owner, repo, octokit);
-      const correctness = await calculateCorrectness(owner, repo, octokit);
-      const busFactor = await calculateBusFactor(owner, repo, 50, octokit);
+      //const responsiveness = await calculateResponsiveness(owner, repo, octokit);
+      //const correctness = await calculateCorrectness(owner, repo, octokit);
+      //const busFactor = await calculateBusFactor(owner, repo, 50, octokit);
       
+      const responsiveness = -1;
+      const correctness = -1;
+      const busFactor = -1;
+
+      // to be implemented. 
+      const netscore = 0; // will implement (needs to be between 0 and 1 though) 
+      const netscore_latency = -1; 
+      const rampup = -1;
+      const rampup_latency = -1;
+      const correctness_latency = -1;
+      const busfactory_latency = -1;
+      const responsiveness_latency = -1;
+      const license = -1;
+      const license_latency = -1; 
+
       // Output the results in NDJSON format
       console.log(JSON.stringify({ 
-        URL: url, 
-        Responsiveness: responsiveness, 
-        Correctness: correctness, 
-        BusFactor: busFactor 
+        URL: url,
+        NetScore: netscore,
+        NetScore_Latency: netscore_latency,
+        RampUp: rampup,
+        RampUp_Latency: rampup_latency,
+        Correctness: correctness,
+        Correctness_Latency: correctness_latency,
+        BusFactor: busFactor,
+        BusFactor_Latency: busfactory_latency,
+        ResponsiveMaintainer: responsiveness,
+        ResponsiveMaintainer_Latency : responsiveness_latency,
+        License: license,
+        License_Latency: license_latency,
       }));
+
     } else {
       console.error(`Invalid URL format: ${url}`);
+      process.exit(1);
     }
   }
   process.exit(0);
@@ -92,11 +118,6 @@ const main = () => {
     }
   };
 
-  if (!validateToken(token)) {
-    process.exit(1);
-  }
-
-
 
   switch (command) {
     case 'install':
@@ -109,6 +130,11 @@ const main = () => {
       // assuming the command is the URL_FILE, first checking if it exists. 
       if (!fs.existsSync(command)) {
           console.error(`URL file does not exist: ${command}`);
+          process.exit(1);
+        }
+        
+        // also assert a valid gitHub token.
+        if (!validateToken(token)) {
           process.exit(1);
         }
 

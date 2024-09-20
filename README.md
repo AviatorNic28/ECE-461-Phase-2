@@ -2,19 +2,18 @@
 ECE 461 Semester Project.
 
 ## Team Members
-Akash Amalarasan<br>
-Charlie Kim<br>
-Alison Liang<br>
-Nicholas Tanzillo
+Akash Amalarasan aamalara@purdue.edu <br>
+Charlie Kim kim3500@purdue.edu <br>
+Alison Liang arliang@purdue.edu <br>
+Nicholas Tanzillo ntanzill@purdue.edu
 
 ## TODO / Double Check (remove later):
 * Implement license checker.  
-* create `run` executable (with required commands).
 * add 20 test cases (each metric has at least 1 test case), line coverage is printed (80% min).
-* env vars setup (LOG_FILE, LOG_LEVEL, GITHUB_TOKEN)
-* using invalid GitHub Token yields rc 1 & stdout "INVALIDTOKEN"
-* metrics calculated in parallel
+* env vars (LOG_FILE, LOG_LEVEL).
+* metrics calculated in parallel and metrics are double checked. 
 * desc for purpose of project, configuration details, how to invoke.
+* make sure to move final run executable into project root directory.
 
 ## Notes (remove later)
 * "Ramp-up time measures" documentation complexity and the number of contributions/contributors.
@@ -95,42 +94,19 @@ but the auto-grader will run on eceprog.
    ```
    This compiles all the TypeScript files into JavaScript and places them in the `/dist` directory.
 
-### **5. Run the Tool**
+### **5. Make Sure the `run` File is Executable**
 
-- To run the tool, use:
-   ```bash
-   npm start
-   ```
-
-### **6. (Optional) Package as Executable**
-
-- If you want to repackage the code into an executable file after making changes, follow these steps:
-   
-   1. Ensure you've built the project (`npm run build`).
-   
-   2. Then, package it into an executable for multiple platforms:
-      ```bash
-      pkg . --targets node16-win-x64,node16-macos-x64,node16-linux-x64 --output 461-project
-      ```
-   
-### **7. Make Sure the `run` File is Executable**
-
-1. Ensure you have compiled the TypeScript file into JavaScript (from `/src` to `/dist`):
-   ```bash
-   npm run build
-   ```
-
-2. Rename the compiled JavaScript file `run.js` (from `/dist`) to simply `run`:
+1. Rename the compiled JavaScript file `run.js` (from `/dist`) to simply `run`:
    ```bash
    mv dist/run.js dist/run
    ```
 
-3. Make the `run` file executable:
+2. Make the `run` file executable:
    ```bash
    chmod +x dist/run
    ```
 
-4. Run the `run` executable:
+3. Run the `run` executable:
    ```bash
    ./dist/run install
    # we are rate limited - make sure to also set the GITHUB_TOKEN env var.
