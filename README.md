@@ -7,12 +7,14 @@ Charlie Kim kim3500@purdue.edu <br>
 Alison Liang arliang@purdue.edu <br>
 Nicholas Tanzillo ntanzill@purdue.edu
 
+## Project Purpose
+The project aims to develop a command-line interface (CLI) tool for ACME Corporation to facilitate the trustworthy reuse of open-source Node.js modules. Addressing concerns from their software architects, the CLI will evaluate modules based on criteria such as ramp-up time, correctness, bus factor, responsiveness, and license compatibility with the GNU Lesser General Public License v2.1. The output will provide users with an overall score and detailed sub-scores for each module, ensuring informed decision-making for future Node.js service developments. This tool will set the groundwork for potential web service integration in future phases.
+
+
 ## TODO / Double Check (remove later):
-* Implement license checker.  
+* Implement/Check metrics (busfactor, correctness, license compatible, rampup, responsiveness). (also find way to calculate in parallel)
+* syntax checker passes, we just need to make sure the above metrics are computed correctly and return floats.
 * add 20 test cases (each metric has at least 1 test case), line coverage is printed (80% min).
-* env vars (LOG_FILE, LOG_LEVEL).
-* metrics calculated in parallel and metrics are double checked. 
-* desc for purpose of project, configuration details, how to invoke.
 * make sure to move final run executable into project root directory.
 
 ## Notes (remove later)
@@ -122,7 +124,7 @@ but the auto-grader will run on eceprog.
    ./dist/run /home/shay/a/purdue_username/path_to_cloned_repo/461-project/src/test_urls.txt
    ```
 
-### **Environment Setup for Logging** (check over)
+### **Environment Setup for Logging**
 
 - Make sure to set up environment variables for logging:
    ```bash
