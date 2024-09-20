@@ -62,8 +62,8 @@ const calculateMetrics = async (urlFile: string, token: string) => {
           calculateResponsiveness(owner, repo, octokit),
           calculateCorrectness(owner, repo, octokit),
           calculateBusFactor(owner, repo, 50, octokit),
-          calculateLicenseCompatibility(owner, repo, 50, octokit),
-          calculateRampUpTime(owner, repo, 50, octokit)
+          calculateLicenseCompatibility(owner, repo, octokit),
+          calculateRampUpTime(owner, repo, octokit)
         ]);
 
         // Calculate NetScore

@@ -15,8 +15,10 @@ export const calculateResponsiveness = async (owner: string, repo: string, octok
     console.log('Running responsiveness metric...');
   }
   
-  const startTime = performance.now(); // Start measuring time
+  // begin measuring latency
+  const startTime = performance.now();
 
+  // begin responsiveness calculation.
   try {
     const issuesResponse = await octokit.issues.listForRepo({
       owner,
@@ -72,8 +74,9 @@ export const calculateResponsiveness = async (owner: string, repo: string, octok
         responsiveScore = 0;
       }
 
-      const endTime = performance.now(); // End measuring time
-      const latency = (endTime - startTime) / 1000; // Calculate latency (seconds)
+      // measure latency.
+      const endTime = performance.now();
+      const latency = (endTime - startTime) / 1000;
 
       return {
         responsiveness: responsiveScore,
@@ -81,17 +84,20 @@ export const calculateResponsiveness = async (owner: string, repo: string, octok
       }
 
     } else {
-      console.log(`No events found for issues in repository "${owner}/${repo}".`);
+      if(currentLogLevel == LogLevel.DEBUG) {
+        logger.debug(`No events found for issues in repository "${owner}/${repo}".`)
+      }
+      
       return {
         responsiveness: -1,
         responsiveness_latency: -1,
       }
     }
   } catch (error) {
-    console.error('Error calculating Responsiveness:', error);
     if(currentLogLevel == LogLevel.DEBUG) {
-    logger.debug('Error retrieving Responsiveness');
-    }
+    logger.debug('Error retrieving ResponsivenessL ', error);
+  }
+
     return {
       responsiveness: -1,
       responsiveness_latency: -1,
