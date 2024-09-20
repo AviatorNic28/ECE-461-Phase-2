@@ -7,7 +7,7 @@ Charlie Kim<br>
 Alison Liang<br>
 Nicholas Tanzillo
 
-## TODO / Double Check:
+## TODO / Double Check (remove later):
 * Implement license checker.  
 * create `run` executable (with required commands).
 * add 20 test cases (each metric has at least 1 test case), line coverage is printed (80% min).
@@ -17,7 +17,7 @@ Nicholas Tanzillo
 * desc for purpose of project, configuration details, how to invoke.
 * 1 metric uses Rest or GraphQL API.
 
-## Notes
+## Notes (remove later)
 * "Ramp-up time measures" documentation complexity and the number of contributions/contributors.
   - "Correctness" is based on "Ramp-up time" goals. We will do testing as needed to measure our project's "Correctness."
 * [Phase 1 Rubric](https://piazza.com/class/lzvpabcdwx83b0/post/94)
@@ -54,22 +54,61 @@ i set the threshold manually to be 50% for the majority, you can change that by 
 * added a check for open issue count and it should display the oldest open issues and what they are!
 
 ---
-clone the repo and install dependencies by running in git bash
 
-```npm install```
+## Setup Instructions
 
-which should install octokit/rest (github api), moment (for time/date calcs), and typescript (typescript).
+### **1. Connect to ECEPROG**
 
-then run (if you make any changes to the code)
+- SSH into the **ECEPROG** server. Use the following command to connect:
+   ```bash
+   # password is the 4 digit code followed by ",push".
+   # or you can generate ssh key to bypass. 
+   ssh your_username@eceprog.ecn.purdue.edu
+   ```
 
-```npm build```
+> **Note**: You can develop and test the project locally on your machine, 
+but the auto-grader will run on eceprog.
 
-which should compile the typescript files into javascript in /dist
+### **2. Clone the Repository**
+   ```bash
+   git clone https://github.com/your-repo/your-project.git
+   # once in the cloned repo, run the following command. 
+   cd 461-project
+   ```
 
-run the tool using
+### **3. Install Dependencies**
 
-```npm start```
+- Run the following command in the terminal to install the necessary packages:
+   ```bash
+   npm install
+   ```
+   This installs the following packages:
+   - `@octokit/rest` (GitHub API)
+   - `moment` (for time and date calculations)
+   - `typescript`
 
-or you can just use the .exe file i packaged! note that the file was packaged with the default shipped version of the files, so if you want to repackage all that stuff into an updated .exe, run these commands after building:
+### **4. Make Changes and Build**
 
-```pkg . --targets node16-win-x64,node16-macos-x64,node16-linux-x64 --output 461-project```
+- If you make any changes to the TypeScript code, you need to compile it into JavaScript. Run:
+   ```bash
+   npm run build
+   ```
+   This compiles all the TypeScript files into JavaScript and places them in the `/dist` directory.
+
+### **5. Run the Tool**
+
+- To run the tool, use:
+   ```bash
+   npm start
+   ```
+
+### **6. (Optional) Package as Executable**
+
+- If you want to repackage the code into an executable file after making changes, follow these steps:
+   
+   1. Ensure you've built the project (`npm run build`).
+   
+   2. Then, package it into an executable for multiple platforms:
+      ```bash
+      pkg . --targets node16-win-x64,node16-macos-x64,node16-linux-x64 --output 461-project
+      ```
