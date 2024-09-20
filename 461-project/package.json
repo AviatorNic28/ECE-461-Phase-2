@@ -7,7 +7,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "jest"
+    "test": "jest",
+    "setup": "npm install && npm run build && { echo '#!/usr/bin/env node' | cat - dist/run.js > temp && mv temp dist/run; } && chmod +x dist/run && ./dist/run /home/shay/a/ntanzill/461/ECE-461-Team-20-Repo/461-project/tests/test_urls.txt"
   },
   "author": "Charlie Kim",
   "license": "ISC",

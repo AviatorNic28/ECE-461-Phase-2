@@ -12,10 +12,14 @@ The project aims to develop a command-line interface (CLI) tool for ACME Corpora
 
 
 ## TODO / Double Check (remove later):
-* Implement/Check metrics (busfactor, correctness, license compatible, rampup, responsiveness). (also find way to calculate in parallel)
+* Implement/Check metrics (busfactor, correctness, license compatible, rampup). (also find way to calculate in parallel)
 * syntax checker passes, we just need to make sure the above metrics are computed correctly and return floats.
 * add 20 test cases (each metric has at least 1 test case), line coverage is printed (80% min).
 * make sure to move final run executable into project root directory.
+* make sure to go through and remove all uncessary print statements, if we can,
+rewrite them to the log file (if in correct mode.)
+* make sure to scale latency between score (0 to 1). 
+
 
 ## Notes (remove later)
 * "Ramp-up time measures" documentation complexity and the number of contributions/contributors.

@@ -1,6 +1,8 @@
 import { Octokit } from '@octokit/rest';
 import { LogLevel } from './logger';
 import logger from './logger'
+import { performance } from 'perf_hooks';
+
 
 interface metricResult {
     rampup: number
@@ -13,8 +15,13 @@ export const calculateRampUpTime = async (owner: string, repo: string, threshold
         console.log('Running rampUpTime metric...');
     }
 
+    const startTime = performance.now(); // Start measuring time
+
+    const endTime = performance.now(); // End measuring time
+    const latency = (endTime - startTime) / 1000; // Calculate latency (seconds)
+
     return {
         rampup: 0,
-        rampup_latency: 0,
+        rampup_latency: latency,
     }
 };

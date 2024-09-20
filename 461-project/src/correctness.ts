@@ -2,6 +2,8 @@ import { Octokit } from '@octokit/rest';
 import moment from 'moment';
 import { LogLevel } from './logger';
 import logger from './logger'
+import { performance } from 'perf_hooks';
+
 
 interface metricResult {
   correctness: number
@@ -14,6 +16,9 @@ export const calculateCorrectness = async (owner: string, repo: string, octokit:
     console.log('Running Correctness metric...');
   }
   
+  const startTime = performance.now(); // Start measuring time
+
+
   try {
     // Fetch the package.json file from the repository
     const repoResponse = await octokit.repos.getContent({
@@ -68,6 +73,9 @@ export const calculateCorrectness = async (owner: string, repo: string, octokit:
     console.error('Error calculating Correctness:', error);
     console.log('Error retrieving Correctness');
   }
+
+  const endTime = performance.now(); // End measuring time
+  const latency = (endTime - startTime) / 1000; // Calculate latency (seconds)
 
   return {
     correctness: 0,

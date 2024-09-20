@@ -2,6 +2,7 @@ import { Octokit } from '@octokit/rest';
 import moment from 'moment';
 import { LogLevel } from './logger';
 import logger from './logger'
+import { performance } from 'perf_hooks';
 
 interface metricResult {
   responsiveness: number
@@ -14,6 +15,8 @@ export const calculateResponsiveness = async (owner: string, repo: string, octok
     console.log('Running responsiveness metric...');
   }
   
+  const startTime = performance.now(); // Start measuring time
+
   try {
     const issuesResponse = await octokit.issues.listForRepo({
       owner,
@@ -49,27 +52,49 @@ export const calculateResponsiveness = async (owner: string, repo: string, octok
 
       const averageResponseTimeInMs = totalMilliseconds / responseTimestamps.length;
       const averageResponseTimeInHours = averageResponseTimeInMs / (1000 * 60 * 60);
+      
+      if(currentLogLevel == LogLevel.INFO) {
+          console.log(`Average response time for "${owner}/${repo}" is: ${averageResponseTimeInHours.toFixed(2)} hours`);
+      }
 
-      console.log(`Average response time for "${owner}/${repo}" is: ${averageResponseTimeInHours.toFixed(2)} hours`);
+      // scale metric between 0 and 1.
+      // SCALE: 1 = within 1 week , .75 = within 2 weeks, .5 = within 3 weeks , .25 = within 4 weeks, > 4 weeks , 0. 
+      let responsiveScore = -1;
+      if(averageResponseTimeInHours <= 24 * 7) {
+        responsiveScore = 1;
+      } else if(averageResponseTimeInHours <= 24 * 14) {
+        responsiveScore = .75;
+      } else if(averageResponseTimeInHours <= 24 * 21) {
+        responsiveScore = .5;
+      } else if(averageResponseTimeInHours <= 24 * 28) {
+        responsiveScore = .25; 
+      } else {
+        responsiveScore = 0;
+      }
+
+      const endTime = performance.now(); // End measuring time
+      const latency = (endTime - startTime) / 1000; // Calculate latency (seconds)
 
       return {
-        responsiveness: averageResponseTimeInHours,
-        responsiveness_latency: averageResponseTimeInMs, 
+        responsiveness: responsiveScore,
+        responsiveness_latency: latency, 
       }
 
     } else {
       console.log(`No events found for issues in repository "${owner}/${repo}".`);
       return {
-        responsiveness: 0,
-        responsiveness_latency: 0,
+        responsiveness: -1,
+        responsiveness_latency: -1,
       }
     }
   } catch (error) {
     console.error('Error calculating Responsiveness:', error);
-    console.log('Error retrieving Responsiveness');
+    if(currentLogLevel == LogLevel.DEBUG) {
+    logger.debug('Error retrieving Responsiveness');
+    }
     return {
-      responsiveness: 0,
-      responsiveness_latency: 0,
+      responsiveness: -1,
+      responsiveness_latency: -1,
     }
   }
 };

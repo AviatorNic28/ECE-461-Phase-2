@@ -44,11 +44,18 @@ const processUrls = async (urlFile: string, token: string) => {
     
     if (owner && repo) {
       // these should all return floats. 
-      const { responsiveness, responsiveness_latency } = await calculateResponsiveness(owner, repo, octokit);
+      //const { responsiveness, responsiveness_latency } = await calculateResponsiveness(owner, repo, octokit);
       const { correctness, correctness_latency } = await calculateCorrectness(owner, repo, octokit);
-      const { busfactor, busfactory_latency } = await calculateBusFactor(owner, repo, 50, octokit);
+      //const { busfactor, busfactory_latency } = await calculateBusFactor(owner, repo, 50, octokit);
       const { license, license_latency } = await calculateLicenseCompatibility(owner, repo, 50, octokit);
       const { rampup, rampup_latency } = await calculateRampUpTime(owner, repo, 50, octokit); 
+      
+
+      // commenting out responsivenesss & busfactor as they're implemented correctly, and I don't want to waste github token. 
+      const responsiveness = -1;
+      const responsiveness_latency = -1;
+      const busfactor = -1; 
+      const busfactory_latency = -1; 
 
       // do some error checking here if a metric was calculated incorrectly. 
 
