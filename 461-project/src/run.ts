@@ -22,6 +22,7 @@ const installDependencies = () => {
 
 // Function to process URLs and calculate metrics. 
 const processUrls = async (urlFile: string, token: string) => {
+  // including check here again, in case we want to be able to test functions independently. 
   if (!fs.existsSync(urlFile)) {
     console.error(`URL file does not exist: ${urlFile}`);
     process.exit(1);
@@ -78,6 +79,24 @@ const main = () => {
 
   // Check if token is provided for the URL processing
   const token = process.env.GITHUB_TOKEN || ''; // Use environment variable or empty string
+
+  // Function to validate the GitHub token
+  const validateToken = async (token: string): Promise<boolean> => {
+    const octokit = new Octokit({ auth: token });
+    try {
+      await octokit.rest.users.getAuthenticated();
+      return true; // Token is valid
+    } catch (error) {
+      console.error('Invalid GitHub token:');
+      return false; // Token is invalid
+    }
+  };
+
+  if (!validateToken(token)) {
+    process.exit(1);
+  }
+
+
 
   switch (command) {
     case 'install':
