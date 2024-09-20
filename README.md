@@ -14,7 +14,6 @@ Nicholas Tanzillo ntanzill@purdue.edu
 * metrics calculated in parallel and metrics are double checked. 
 * desc for purpose of project, configuration details, how to invoke.
 * make sure to move final run executable into project root directory.
-* figure out why it says 40%+ code is JS... all src files are ts; pretty sure it's due to the run.ts file 
 
 ## Notes (remove later)
 * "Ramp-up time measures" documentation complexity and the number of contributions/contributors.
@@ -95,7 +94,15 @@ but the auto-grader will run on eceprog.
    ```
    This compiles all the TypeScript files into JavaScript and places them in the `/dist` directory.
 
-### **5. Make Sure the `run` File is Executable**
+### **5. Add Shebang to the Compiled JavaScript File**
+
+- To ensure the script can be executed directly from the command line, add the shebang line to the top of the compiled `run` file. Edit the file `dist/run.js` and add the following line at the very beginning:
+   ```bash
+   #!/usr/bin/env node
+   ```
+   This tells the system to run the file using Node.js.
+
+### **6. Make Sure the `run` File is Executable**
 
 1. Rename the compiled JavaScript file `run.js` (from `/dist`) to simply `run`:
    ```bash
