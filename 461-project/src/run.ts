@@ -28,6 +28,11 @@ const installDependencies = () => {
   });
 };
 
+// function for rounding latency scores.
+function roundToThreeDecimalPoints(value: number): number {
+  return Math.round(value * 1000) / 1000;
+}
+
 // Function to calculate Metrics.
 // (handles parsing urls, calculating metrics, and displaying them to the console.)
 const calculateMetrics = async (urlFile: string, token: string) => {
@@ -52,7 +57,7 @@ const calculateMetrics = async (urlFile: string, token: string) => {
       try {
 
         // Run all metric calculations in parallel
-        const [
+        let [
           { responsiveness, responsiveness_latency },
           { correctness, correctness_latency },
           { busfactor, busfactory_latency },
@@ -66,12 +71,20 @@ const calculateMetrics = async (urlFile: string, token: string) => {
           calculateRampUpTime(owner, repo, octokit)
         ]);
 
-        // Calculate NetScore
+        // To assert NetScore won't be negative.
         const responsivenessNet = Math.max(responsiveness, 0);
         const correctnessNet = Math.max(correctness, 0);
         const busfactorNet = Math.max(busfactor, 0);
         const licenseNet = Math.max(license, 0);
         const rampupNet = Math.max(rampup, 0);
+
+        // roundoff all latency scores.
+        responsiveness_latency = roundToThreeDecimalPoints(responsiveness_latency);
+        correctness_latency = roundToThreeDecimalPoints(correctness_latency);
+        busfactory_latency = roundToThreeDecimalPoints(busfactory_latency);
+        license_latency = roundToThreeDecimalPoints(license_latency);
+        rampup_latency = roundToThreeDecimalPoints(rampup_latency); 
+        
 
         const netscore = (0.40) * responsivenessNet + (0.30) * correctnessNet + (0.15) * busfactorNet + (0.10) * rampupNet + (0.05) * licenseNet;
         const netscore_latency = responsiveness_latency + correctness_latency + busfactory_latency + rampup_latency + license_latency;

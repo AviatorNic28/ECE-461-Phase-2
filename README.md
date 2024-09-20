@@ -14,7 +14,6 @@ The project aims to develop a command-line interface (CLI) tool for ACME Corpora
 ## TODO (remove later):
 * add 20 test cases (min 1 for each metric), line coverage printed (min 80%).
 * move final run executable into project root.
-* make sure all latency scores are scaled between [0, 1], right now the latency is just measured in seconds and is returned for each metric.
 * add support for npmjs urls (e.g `https://www.npmjs.com/package/even`).
 * remove harded-coded `test_urls.txt` path in `package.json` setup script.
 * main latency comes from `responsiveness` metric, look into reducing.
