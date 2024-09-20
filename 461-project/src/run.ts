@@ -2,7 +2,10 @@
 
 import { exec } from 'child_process';
 import * as fs from 'fs';
-import * as path from 'path';
+import { Octokit } from '@octokit/rest'; // Import Octokit
+import { calculateResponsiveness } from './responsiveness';
+import { calculateCorrectness } from './correctness';
+import { calculateBusFactor } from './busfactor';
 
 // Function to install dependencies
 const installDependencies = () => {
@@ -17,22 +20,45 @@ const installDependencies = () => {
   });
 };
 
-// Function to process URLs 
-// main functionality (concurrency for metrics)
-const processUrls = (urlFile: string) => {
+// Function to process URLs and calculate metrics. 
+const processUrls = async (urlFile: string, token: string) => {
   if (!fs.existsSync(urlFile)) {
     console.error(`URL file does not exist: ${urlFile}`);
     process.exit(1);
   }
 
   const urls = fs.readFileSync(urlFile, 'utf-8').split('\n').filter(Boolean);
-  urls.forEach((url) => {
-    // Here, you would calculate your scores and latencies
-    const netScore = Math.random(); // Mock score
-    const netScoreLatency = Math.random(); // Mock latency
-    console.log(JSON.stringify({ URL: url, NetScore: netScore, NetScore_Latency: netScoreLatency }));
-  });
+  
+  // Initialize Octokit
+  const octokit = new Octokit(token ? { auth: token } : {}); 
+ 
+  for (const url of urls) {
+    const [owner, repo] = extractOwnerAndRepo(url);
+    
+    if (owner && repo) {
+      // Call your metric functions here
+      const responsiveness = await calculateResponsiveness(owner, repo, octokit);
+      const correctness = await calculateCorrectness(owner, repo, octokit);
+      const busFactor = await calculateBusFactor(owner, repo, 50, octokit);
+      
+      // Output the results in NDJSON format
+      console.log(JSON.stringify({ 
+        URL: url, 
+        Responsiveness: responsiveness, 
+        Correctness: correctness, 
+        BusFactor: busFactor 
+      }));
+    } else {
+      console.error(`Invalid URL format: ${url}`);
+    }
+  }
   process.exit(0);
+};
+
+// Helper function to extract owner and repo from URL.
+const extractOwnerAndRepo = (url: string): [string | null, string | null] => {
+  const match = url.match(/github\.com\/([^\/]+)\/([^\/]+)/);
+  return match ? [match[1], match[2]] : [null, null];
 };
 
 // Function to run tests
@@ -48,8 +74,11 @@ const runTests = () => {
 
 // Main function to handle command line arguments
 const main = () => {
-  const [,, command, arg] = process.argv;
-  
+  const [,, command, _] = process.argv;
+
+  // Check if token is provided for the URL processing
+  const token = process.env.GITHUB_TOKEN || ''; // Use environment variable or empty string
+
   switch (command) {
     case 'install':
       installDependencies();
@@ -57,12 +86,14 @@ const main = () => {
     case 'test':
       runTests();
       break;
-    case 'URL_FILE':
-      processUrls(arg); // this should somehow call index and all of the functions that calculate metrics. 
-      break;
     default:
-      console.log("Invalid command. Use 'install', 'test', or provide a URL file.");
-      process.exit(1);
+      // assuming the command is the URL_FILE, first checking if it exists. 
+      if (!fs.existsSync(command)) {
+          console.error(`URL file does not exist: ${command}`);
+          process.exit(1);
+        }
+
+      processUrls(command, token);
   }
 };
 

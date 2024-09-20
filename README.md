@@ -132,8 +132,9 @@ but the auto-grader will run on eceprog.
 4. Run the `run` executable:
    ```bash
    ./dist/run install
+   # we are rate limited - make sure to also set the GITHUB_TOKEN env var.
    ./dist/run test
-   ./dist/run /absolute_path/to/url_file.txt
+   ./dist/run /home/shay/a/purdue_username/path_to_cloned_repo/461-project/src/test_urls.txt
    ```
 
 ### **Environment Setup for Logging** (check over)
