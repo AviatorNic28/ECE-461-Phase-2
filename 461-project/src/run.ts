@@ -48,7 +48,7 @@ const processUrls = async (urlFile: string, token: string) => {
       const { correctness, correctness_latency } = await calculateCorrectness(owner, repo, octokit);
       //const { busfactor, busfactory_latency } = await calculateBusFactor(owner, repo, 50, octokit);
       //const { license, license_latency } = await calculateLicenseCompatibility(owner, repo,  50, octokit);
-      const { rampup, rampup_latency } = await calculateRampUpTime(owner, repo, 50, octokit); 
+      //const { rampup, rampup_latency } = await calculateRampUpTime(owner, repo, 50, octokit); 
       
 
       // commenting out metrics that are implemented correctly (don't want to waste queries)
@@ -58,7 +58,8 @@ const processUrls = async (urlFile: string, token: string) => {
       const busfactory_latency = -1; 
       const license = -1;
       const license_latency = -1;
-
+      const rampup = -1;
+      const rampup_latency = -1;
 
       // do some error checking here if a metric was calculated incorrectly. 
 
