@@ -8,6 +8,7 @@ import { calculateLicenseCompatibility } from './license_compatibility';
 import { calculateRampUpTime } from './rampup_time';
 import { LogLevel } from './logger';
 import logger from './logger'
+import { buffer } from 'stream/consumers';
 
 // Function to install dependencies
 const installDependencies = () => {
@@ -43,55 +44,60 @@ const processUrls = async (urlFile: string, token: string) => {
     const [owner, repo] = extractOwnerAndRepo(url);
     
     if (owner && repo) {
-      // these should all return floats. 
-      //const { responsiveness, responsiveness_latency } = await calculateResponsiveness(owner, repo, octokit);
-      const { correctness, correctness_latency } = await calculateCorrectness(owner, repo, octokit);
-      //const { busfactor, busfactory_latency } = await calculateBusFactor(owner, repo, 50, octokit);
-      //const { license, license_latency } = await calculateLicenseCompatibility(owner, repo,  50, octokit);
-      //const { rampup, rampup_latency } = await calculateRampUpTime(owner, repo, 50, octokit); 
-      
+      try {
+        // Run all metric calculations in parallel
+        const [
+          { responsiveness, responsiveness_latency },
+          { correctness, correctness_latency },
+          { busfactor, busfactory_latency },
+          { license, license_latency },
+          { rampup, rampup_latency }
+        ] = await Promise.all([
+          calculateResponsiveness(owner, repo, octokit),
+          calculateCorrectness(owner, repo, octokit),
+          calculateBusFactor(owner, repo, 50, octokit),
+          calculateLicenseCompatibility(owner, repo, 50, octokit),
+          calculateRampUpTime(owner, repo, 50, octokit)
+        ]);
 
-      // commenting out metrics that are implemented correctly (don't want to waste queries)
-      const responsiveness = -1;
-      const responsiveness_latency = -1;
-      const busfactor = -1; 
-      const busfactory_latency = -1; 
-      const license = -1;
-      const license_latency = -1;
-      const rampup = -1;
-      const rampup_latency = -1;
+        // Calculate NetScore
+        const responsivenessNet = Math.max(responsiveness, 0);
+        const correctnessNet = Math.max(correctness, 0);
+        const busfactorNet = Math.max(busfactor, 0);
+        const licenseNet = Math.max(license, 0);
+        const rampupNet = Math.max(rampup, 0);
 
-      // do some error checking here if a metric was calculated incorrectly. 
+        const netscore = (0.40) * responsivenessNet + (0.30) * correctnessNet + (0.15) * busfactorNet + (0.10) * rampupNet + (0.05) * licenseNet;
+        const netscore_latency = responsiveness_latency + correctness_latency + busfactory_latency + rampup_latency + license_latency;
 
-      // netscore calculations. 
-      const netscore = (.40) * responsiveness + (.30) * correctness + (.15) * busfactor + (.10) * rampup + (.05) * license
-      const netscore_latency = responsiveness_latency + correctness_latency + busfactory_latency + rampup_latency + license_latency; 
+        // Output the results in NDJSON format
+        console.log(JSON.stringify({ 
+          URL: url,
+          NetScore: netscore,
+          NetScore_Latency: netscore_latency,
+          RampUp: rampup,
+          RampUp_Latency: rampup_latency,
+          Correctness: correctness,
+          Correctness_Latency: correctness_latency,
+          BusFactor: busfactor,
+          BusFactor_Latency: busfactory_latency,
+          ResponsiveMaintainer: responsiveness,
+          ResponsiveMaintainer_Latency : responsiveness_latency,
+          License: license,
+          License_Latency: license_latency,
+        }));
 
-
-      // Output the results in NDJSON format
-      console.log(JSON.stringify({ 
-        URL: url,
-        NetScore: netscore,
-        NetScore_Latency: netscore_latency,
-        RampUp: rampup,
-        RampUp_Latency: rampup_latency,
-        Correctness: correctness,
-        Correctness_Latency: correctness_latency,
-        BusFactor: busfactor,
-        BusFactor_Latency: busfactory_latency,
-        ResponsiveMaintainer: responsiveness,
-        ResponsiveMaintainer_Latency : responsiveness_latency,
-        License: license,
-        License_Latency: license_latency,
-      }));
+      } catch (error) {
+        console.error(`Error processing repository ${owner}/${repo}:`, error);
+      }
 
     } else {
       console.error(`Invalid URL format: ${url}`);
-      process.exit(1);
     }
   }
   process.exit(0);
 };
+
 
 // Helper function to extract owner and repo from URL.
 const extractOwnerAndRepo = (url: string): [string | null, string | null] => {
