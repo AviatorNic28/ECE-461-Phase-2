@@ -11,15 +11,14 @@ Nicholas Tanzillo ntanzill@purdue.edu
 The project aims to develop a command-line interface (CLI) tool for ACME Corporation to facilitate the trustworthy reuse of open-source Node.js modules. Addressing concerns from their software architects, the CLI will evaluate modules based on criteria such as ramp-up time, correctness, bus factor, responsiveness, and license compatibility with the GNU Lesser General Public License v2.1. The output will provide users with an overall score and detailed sub-scores for each module, ensuring informed decision-making for future Node.js service developments. This tool will set the groundwork for potential web service integration in future phases.
 
 
-## TODO / Double Check (remove later):
-* Implement/Check metrics (busfactor, correctness, license compatible, rampup). (also find way to calculate in parallel)
-* syntax checker passes, we just need to make sure the above metrics are computed correctly and return floats.
-* add 20 test cases (each metric has at least 1 test case), line coverage is printed (80% min).
-* make sure to move final run executable into project root directory.
-* make sure to go through and remove all uncessary print statements, if we can,
-rewrite them to the log file (if in correct mode.)
-* make sure to scale latency between score (0 to 1). 
-
+## TODO (remove later):
+* Check correctness metric. (not sure what is wrong with it... has to do with calling `octokit.repo.getContent`)
+* cleanup metrics (var names, comments, print statements, etc.) and run in parallel.
+* add 20 test cases (min 1 for each metric), line coverage printed (min 80%).
+* move final run executable into project root.
+* make sure all latency scores are scaled between [0, 1], right now the latency is just measured in seconds and is returned for each metric.
+* add support for npmjs urls (e.g `https://www.npmjs.com/package/even`).
+* remove harded-coded `test_urls.txt` path in `package.json` setup script.
 
 ## Notes (remove later)
 * "Ramp-up time measures" documentation complexity and the number of contributions/contributors.
@@ -31,6 +30,8 @@ rewrite them to the log file (if in correct mode.)
 * [GitHub REST API Docs](https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api?apiVersion=2022-11-28)
 * [TypeScript Basics](https://www.w3schools.com/typescript/typescript_intro.php)
 * You can expect the autograder to set up the env variables for you. So your program should only load it from the process.env and not try to load the .env file
+
+* current code works with syntax checker.
 
 ---
 Week 3 Changes (Charlie Kim)
