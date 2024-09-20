@@ -25,6 +25,7 @@ Nicholas Tanzillo
 * [Phase 1 SPEC](https://purdue.brightspace.com/d2l/le/content/1096370/viewContent/17430281/View)
 * [GitHub REST API Docs](https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api?apiVersion=2022-11-28)
 * [TypeScript Basics](https://www.w3schools.com/typescript/typescript_intro.php)
+* You can expect the autograder to set up the env variables for you. So your program should only load it from the process.env and not try to load the .env file
 
 ---
 Week 3 Changes (Charlie Kim)
