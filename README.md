@@ -7,6 +7,16 @@ Charlie Kim<br>
 Alison Liang<br>
 Nicholas Tanzillo
 
+## TODO / Double Check:
+* Implement license checker.  
+* create `run` executable (with required commands).
+* add 20 test cases (each metric has at least 1 test case), line coverage is printed (80% min).
+* env vars setup (LOG_FILE, LOG_LEVEL, GITHUB_TOKEN)
+* using invalid GitHub Token yields rc 1 & stdout "INVALIDTOKEN"
+* metrics calculated in parallel
+* desc for purpose of project, configuration details, how to invoke.
+* 1 metric uses Rest or GraphQL API.
+
 ## Notes
 * "Ramp-up time measures" documentation complexity and the number of contributions/contributors.
   - "Correctness" is based on "Ramp-up time" goals. We will do testing as needed to measure our project's "Correctness."
