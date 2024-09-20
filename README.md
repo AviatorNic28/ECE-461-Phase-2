@@ -71,7 +71,7 @@ but the auto-grader will run on eceprog.
 
 ### **2. Clone the Repository**
    ```bash
-   git clone https://github.com/your-repo/your-project.git
+   git clone https://github.com/akashamalNA/ECE-461-Team-20-Repo
    # once in the cloned repo, run the following command. 
    cd 461-project
    ```
