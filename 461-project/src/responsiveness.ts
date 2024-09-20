@@ -1,5 +1,7 @@
 import { Octokit } from '@octokit/rest';
 import moment from 'moment';
+import { LogLevel } from './logger';
+import logger from './logger'
 
 interface metricResult {
   responsiveness: number
@@ -7,7 +9,10 @@ interface metricResult {
 }
 
 export const calculateResponsiveness = async (owner: string, repo: string, octokit: Octokit): Promise<metricResult> => {
-  console.log('Running Responsiveness metric...');
+  const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
+  if(currentLogLevel == LogLevel.INFO) {
+    console.log('Running responsiveness metric...');
+  }
   
   try {
     const issuesResponse = await octokit.issues.listForRepo({

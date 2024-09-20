@@ -6,10 +6,16 @@ import { calculateCorrectness } from './correctness';
 import { calculateBusFactor } from './busfactor';
 import { calculateLicenseCompatibility } from './license_compatibility';
 import { calculateRampUpTime } from './rampup_time';
+import { LogLevel } from './logger';
+import logger from './logger'
 
 // Function to install dependencies
 const installDependencies = () => {
-  console.log("Installing dependencies...");
+  const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
+  if(currentLogLevel == LogLevel.INFO) {
+      logger.info("Installing dependencies...");
+  }
+
   exec('npm install', (error, stdout, stderr) => {
     if (error) {
       console.error(`Failed to install dependencies: ${stderr}`);
@@ -99,6 +105,7 @@ const main = () => {
 
   // Check if token is provided for the URL processing
   const token = process.env.GITHUB_TOKEN || ''; // Use environment variable or empty string
+  const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
 
   // Function to validate the GitHub token
   const validateToken = async (token: string): Promise<boolean> => {

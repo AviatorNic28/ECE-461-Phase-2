@@ -1,4 +1,6 @@
 import { Octokit } from '@octokit/rest';
+import { LogLevel } from './logger';
+import logger from './logger'
 
 interface metricResult {
   busfactor: number
@@ -6,7 +8,10 @@ interface metricResult {
 }
 
 export const calculateBusFactor = async (owner: string, repo: string, threshold: number = 50, octokit: Octokit): Promise<metricResult> => {
-  console.log('Running Bus Factor metric...');  // could be good for logging purposes. 
+  const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
+  if(currentLogLevel == LogLevel.INFO) {
+    console.log('Running Bus Factor metric...'); 
+  }
 
   try {
     // Fetch contributors from the GitHub repository
