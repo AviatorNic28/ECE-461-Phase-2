@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { exec } from 'child_process';
 import * as fs from 'fs';
 import { Octokit } from '@octokit/rest'; // Import Octokit
