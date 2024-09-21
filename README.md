@@ -75,7 +75,29 @@ but the auto-grader will run on eceprog.
    cd 461-project
    ```
 
-### **3. Install Dependencies**
+#### **3. Set Environment Variables**
+1. **`GITHUB_TOKEN`**:  
+   This token allows access to the GitHub API (e.g., for fetching repository data).  
+   You need to generate a [GitHub Personal Access Token](https://github.com/settings/tokens) and then set it using:
+   ```bash
+   export GITHUB_TOKEN=your_personal_access_token_here
+   ```
+2. **`LOG_FILE`**:  
+   This specifies the path where log messages will be written. You should set a file path (e.g., `/home/your_username/logs/project.log`).  
+   Example:
+   ```bash
+   export LOG_FILE=/home/your_username/logs/project.log
+   ```
+3. **`LOG_LEVEL`**:  
+   This controls the verbosity of log output. Set it according to your preferred level of logging:
+   - `0`: Silent (no logging)
+   - `1`: Info level logging
+   - `2`: Debug level logging
+   ```bash
+   export LOG_LEVEL=1
+   ```
+
+### **4. Install Dependencies**
 
 - Run the following command in the terminal to install the necessary packages:
    ```bash
@@ -86,7 +108,7 @@ but the auto-grader will run on eceprog.
    - `moment` (for time and date calculations)
    - `typescript`
 
-### **4. Make Changes and Build**
+### **5. Make Changes and Build**
 
 - If you make any changes to the TypeScript code, you need to compile it into JavaScript. Run:
    ```bash
@@ -94,7 +116,7 @@ but the auto-grader will run on eceprog.
    ```
    This compiles all the TypeScript files into JavaScript and places them in the `/dist` directory.
 
-### **5. Add Shebang to the Compiled JavaScript File**
+### **6. Add Shebang to the Compiled JavaScript File**
 
 - To ensure the script can be executed directly from the command line, add the shebang line to the top of the compiled `run` file. Edit the file `dist/run.js` and add the following line at the very beginning:
    ```bash
@@ -102,7 +124,7 @@ but the auto-grader will run on eceprog.
    ```
    This tells the system to run the file using Node.js.
 
-### **6. Make Sure the `run` File is Executable**
+### **7. Make Sure the `run` File is Executable**
 
 1. Rename the compiled JavaScript file `run.js` (from `/dist`) to simply `run`:
    ```bash
@@ -119,12 +141,4 @@ but the auto-grader will run on eceprog.
    ./dist/run install
    ./dist/run test
    ./dist/run /home/shay/a/purdue_username/path_to_cloned_repo/461-project/src/test_urls.txt
-   ```
-
-### **Environment Setup for Logging**
-
-- Make sure to set up environment variables for logging:
-   ```bash
-   export LOG_FILE=/path/to/logfile.log
-   export LOG_LEVEL=1  # 0: silent, 1: info, 2: debug
    ```
