@@ -6,7 +6,7 @@ import { performance } from 'perf_hooks';
 
 interface metricResult {
   busfactor: number
-  busfactory_latency: number
+  busfactor_latency: number
 }
 
 export const calculateBusFactor = async (owner: string, repo: string, threshold: number = 50, octokit: Octokit): Promise<metricResult> => {
@@ -62,7 +62,7 @@ export const calculateBusFactor = async (owner: string, repo: string, threshold:
     
     return {
       busfactor : -1,
-      busfactory_latency : -1,
+      busfactor_latency : -1,
     }
   
   }
@@ -88,6 +88,6 @@ export const calculateBusFactor = async (owner: string, repo: string, threshold:
   
   return {
     busfactor: scaledBusFactor,
-    busfactory_latency: latency,
+    busfactor_latency: latency,
   }
 };

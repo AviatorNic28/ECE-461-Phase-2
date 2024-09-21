@@ -95,7 +95,7 @@ const calculateMetrics = async (urlFile: string, token: string) => {
         let [
           { responsiveness, responsiveness_latency },
           { correctness, correctness_latency },
-          { busfactor, busfactory_latency },
+          { busfactor, busfactor_latency },
           { license, license_latency },
           { rampup, rampup_latency }
         ] = await Promise.all([
@@ -116,13 +116,13 @@ const calculateMetrics = async (urlFile: string, token: string) => {
         // roundoff all latency scores.
         responsiveness_latency = roundToThreeDecimalPoints(responsiveness_latency);
         correctness_latency = roundToThreeDecimalPoints(correctness_latency);
-        busfactory_latency = roundToThreeDecimalPoints(busfactory_latency);
+        busfactor_latency = roundToThreeDecimalPoints(busfactor_latency);
         license_latency = roundToThreeDecimalPoints(license_latency);
         rampup_latency = roundToThreeDecimalPoints(rampup_latency); 
         
 
         const netscore = (0.40) * responsivenessNet + (0.30) * correctnessNet + (0.15) * busfactorNet + (0.10) * rampupNet + (0.05) * licenseNet;
-        const netscore_latency = Math.max(responsiveness_latency, 0) + Math.max(correctness_latency, 0) + Math.max(busfactory_latency, 0) + Math.max(rampup_latency, 0) + Math.max(license_latency);
+        const netscore_latency = Math.max(responsiveness_latency, 0) + Math.max(correctness_latency, 0) + Math.max(busfactor_latency, 0) + Math.max(rampup_latency, 0) + Math.max(license_latency);
 
         // Output the results in NDJSON format
         console.log(JSON.stringify({ 
@@ -134,7 +134,7 @@ const calculateMetrics = async (urlFile: string, token: string) => {
           Correctness: correctness,
           Correctness_Latency: correctness_latency,
           BusFactor: busfactor,
-          BusFactor_Latency: busfactory_latency,
+          BusFactor_Latency: busfactor_latency,
           ResponsiveMaintainer: responsiveness,
           ResponsiveMaintainer_Latency : responsiveness_latency,
           License: license,
