@@ -14,7 +14,6 @@ The project aims to develop a command-line interface (CLI) tool for ACME Corpora
 ## TODO (remove later):
 * add 20 test cases (min 1 for each metric), line coverage printed (min 80%).
 * move final run executable into project root.
-* add support for npmjs urls (e.g `https://www.npmjs.com/package/even`).
 * remove harded-coded `test_urls.txt` path in `package.json` setup script.
 * main latency comes from `responsiveness` metric, look into reducing.
 
@@ -25,11 +24,7 @@ The project aims to develop a command-line interface (CLI) tool for ACME Corpora
 * [syntax checker](https://piazza.com/class/lzvpabcdwx83b0/post/52)
 * [Project Plan](https://docs.google.com/document/d/1XzcjSY4iD0JeGCp3_8yb3W4f8O1s0HRK7Ix6pg2Zano/edit#heading=h.dv1pr3855kek)
 * [Phase 1 SPEC](https://purdue.brightspace.com/d2l/le/content/1096370/viewContent/17430281/View)
-* [GitHub REST API Docs](https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api?apiVersion=2022-11-28)
-* [TypeScript Basics](https://www.w3schools.com/typescript/typescript_intro.php)
 * You can expect the autograder to set up the env variables for you. So your program should only load it from the process.env and not try to load the .env file
-
-* current code works with syntax checker.
 
 ---
 Week 3 Changes (Charlie Kim)
@@ -122,7 +117,6 @@ but the auto-grader will run on eceprog.
 3. Run the `run` executable:
    ```bash
    ./dist/run install
-   # we are rate limited - make sure to also set the GITHUB_TOKEN env var.
    ./dist/run test
    ./dist/run /home/shay/a/purdue_username/path_to_cloned_repo/461-project/src/test_urls.txt
    ```

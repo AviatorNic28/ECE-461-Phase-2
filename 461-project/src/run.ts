@@ -33,6 +33,15 @@ function roundToThreeDecimalPoints(value: number): number {
   return Math.round(value * 1000) / 1000;
 }
 
+  
+// Function to extract package name from npm URL
+const extractPackageName = (url: string): string | null => {
+  const npmUrlPattern = /^https:\/\/www\.npmjs\.com\/package\/([^/]+)$/;
+  const match = url.match(npmUrlPattern);
+
+  return match ? match[1] : null;
+};
+
 // Function to calculate Metrics.
 // (handles parsing urls, calculating metrics, and displaying them to the console.)
 const calculateMetrics = async (urlFile: string, token: string) => {
@@ -52,7 +61,33 @@ const calculateMetrics = async (urlFile: string, token: string) => {
  
   // process each url. 
   for (const url of urls) {
-    const [owner, repo] = extractOwnerAndRepo(url);
+    let [owner, repo] = extractOwnerAndRepo(url);
+    const packageName = extractPackageName(url)
+
+    // if the url passed is an npmjs link.
+    if (packageName != null) {
+      // find github url from package.
+      const npmUrl = `https://registry.npmjs.org/${packageName}`;
+      const response = await fetch(npmUrl);
+      const data = await response.json();
+    
+      // Extract the repository URL from the package metadata
+      const repoUrl = data.repository ? data.repository.url : null;
+      
+      if(repoUrl) {
+        [owner, repo] = extractOwnerAndRepo(repoUrl);
+      } else {
+        // no github url found - cannot perform metric calculations.
+        if(currentLogLevel == LogLevel.DEBUG){
+          logger.debug("no github url found for npm package", npmUrl);
+        }
+        
+        console.log({"URL":"https://www.npmjs.com/package/even","NetScore":-1,"NetScore_Latency":-1,
+          "RampUp":-1,"RampUp_Latency":-1,"Correctness":-1,"Correctness_Latency":-1,"BusFactor":-1,
+          "BusFactor_Latency":-1,"ResponsiveMaintainer":-1,"ResponsiveMaintainer_Latency":-1,"License":-1,"License_Latency":-1})
+      }
+    }
+
     if (owner && repo) {
       try {
 
@@ -87,7 +122,7 @@ const calculateMetrics = async (urlFile: string, token: string) => {
         
 
         const netscore = (0.40) * responsivenessNet + (0.30) * correctnessNet + (0.15) * busfactorNet + (0.10) * rampupNet + (0.05) * licenseNet;
-        const netscore_latency = responsiveness_latency + correctness_latency + busfactory_latency + rampup_latency + license_latency;
+        const netscore_latency = Math.max(responsiveness_latency, 0) + Math.max(correctness_latency, 0) + Math.max(busfactory_latency, 0) + Math.max(rampup_latency, 0) + Math.max(license_latency);
 
         // Output the results in NDJSON format
         console.log(JSON.stringify({ 
