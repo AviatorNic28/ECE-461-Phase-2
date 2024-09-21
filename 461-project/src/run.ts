@@ -169,7 +169,7 @@ const extractOwnerAndRepo = (url: string): [string | null, string | null] => {
 const runTests = () => {
   const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
   if(currentLogLevel == LogLevel.INFO) {
-    console.log("Running tests...");
+    logger.info("Running tests...");
   }    
 
   // to implement
@@ -214,7 +214,7 @@ const main = () => {
       // check valid fie path.  
       if (!fs.existsSync(command)) {
         if(currentLogLevel == LogLevel.DEBUG) {
-          console.error(`URL file does not exist: ${command}`);
+          logger.debug(`URL file does not exist: ${command}`);
         }
         process.exit(1);
       }

@@ -15,7 +15,6 @@ The project aims to develop a command-line interface (CLI) tool for ACME Corpora
 * add 20 test cases (min 1 for each metric), line coverage printed (min 80%).
 * move final run executable into project root.
 * remove harded-coded `test_urls.txt` path in `package.json` setup script.
-* main latency comes from `responsiveness` metric, look into reducing.
 
 ## Notes (remove later)
 * "Ramp-up time measures" documentation complexity and the number of contributions/contributors.
