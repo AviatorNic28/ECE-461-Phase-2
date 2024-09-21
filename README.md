@@ -16,41 +16,11 @@ The project aims to develop a command-line interface (CLI) tool for ACME Corpora
 * move final run executable into project root.
 
 ## Notes (remove later)
-* "Ramp-up time measures" documentation complexity and the number of contributions/contributors.
-  - "Correctness" is based on "Ramp-up time" goals. We will do testing as needed to measure our project's "Correctness."
 * [Phase 1 Rubric](https://piazza.com/class/lzvpabcdwx83b0/post/94)
 * [syntax checker](https://piazza.com/class/lzvpabcdwx83b0/post/52)
 * [Project Plan](https://docs.google.com/document/d/1XzcjSY4iD0JeGCp3_8yb3W4f8O1s0HRK7Ix6pg2Zano/edit#heading=h.dv1pr3855kek)
 * [Phase 1 SPEC](https://purdue.brightspace.com/d2l/le/content/1096370/viewContent/17430281/View)
 * You can expect the autograder to set up the env variables for you. So your program should only load it from the process.env and not try to load the .env file
-
----
-Week 3 Changes (Charlie Kim)
-
-1.) Bus Factor:
-  * how many people are working on the project (sort of) and the higher the bus factor is the better. apparently its called that because of the possibility of the devs getting hit by a bus? anyway its related to the count of the contributions of the contributors and their distribution (what a mouthful lol)
-
-  * this calculates the bus factor by analysing the distribution of commits from the contributors and it finds out the minimum number of devs who are responsible for the most commits.
-i set the threshold manually to be 50% for the majority, you can change that by looking at busfactor.ts is the /src folder.
-
----
-
-2.) Responsiveness:
-* average response time for issues/pull requests. obviously, a shorter response time is better. we all hate waiting on people right?
-
-* this calculates responsiveness by looking at the time difference between when an issue/pr was opened and the first response was made.
-
----
-
-3.) Correctness 
-* checks the validity of the repo by seeing how many open issues it has and whether it has tests in it. if it has low open issues and tests exist, it's probably working decently.
-
-* this calculates correctness by seeing how many open issues it has and whether it's got test files/scripts (by checking references to testing frameworks like mocha/jest/chai in the package.json). this could be improved upon.
-~as of right now it runs checks in package.json for testing frameworks. i dont think it checks for the amount of open issues but i may add to that later! we would need to finalise a way to properly calculate the correctness of a package though.~
-
-* added a check for open issue count and it should display the oldest open issues and what they are!
-
----
 
 ## Setup Instructions
 
