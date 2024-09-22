@@ -10,52 +10,46 @@ Nicholas Tanzillo ntanzill@purdue.edu
 ## Project Purpose
 The project aims to develop a command-line interface (CLI) tool for ACME Corporation to facilitate the trustworthy reuse of open-source Node.js modules. Addressing concerns from their software architects, the CLI will evaluate modules based on criteria such as ramp-up time, correctness, bus factor, responsiveness, and license compatibility with the GNU Lesser General Public License v2.1. The output will provide users with an overall score and detailed sub-scores for each module, ensuring informed decision-making for future Node.js service developments. This tool will set the groundwork for potential web service integration in future phases.
 
-
-## TODO (remove later):
-* move final run executable into project root.
-* one more look over all the code (dead code, bad var names/comments, etc.)
-
 ## Notes (remove later)
 * [Phase 1 Rubric](https://piazza.com/class/lzvpabcdwx83b0/post/94)
 * [syntax checker](https://piazza.com/class/lzvpabcdwx83b0/post/52)
 * [Project Plan](https://docs.google.com/document/d/1XzcjSY4iD0JeGCp3_8yb3W4f8O1s0HRK7Ix6pg2Zano/edit#heading=h.dv1pr3855kek)
 * [Phase 1 SPEC](https://purdue.brightspace.com/d2l/le/content/1096370/viewContent/17430281/View)
 * You can expect the autograder to set up the env variables for you. So your program should only load it from the process.env and not try to load the .env file
+* one more look over all the code (dead code, bad var names/comments, etc.)
 
 ## Setup Instructions
-
 ### **1. Connect to ECEPROG**
 
-- SSH into the **ECEPROG** server. Use the following command to connect:
+- SSH into the **ECEPROG** server using the following command:
    ```bash
-   # password is the 4 digit code followed by ",push".
-   # or you can generate ssh key to bypass. 
+   # The password is the 4-digit code followed by ",push".
+   # Alternatively, you can generate an SSH key.
    ssh your_username@eceprog.ecn.purdue.edu
    ```
 
-> **Note**: You can develop and test the project locally on your machine, 
-but the auto-grader will run on eceprog.
+> **Note**: You can develop and test the project locally on your machine, but the auto-grader will run on ECEPROG.
 
 ### **2. Clone the Repository**
    ```bash
    git clone https://github.com/akashamalNA/ECE-461-Team-20-Repo
-   # once in the cloned repo, run the following command. 
-   cd 461-project
+   # Navigate into the cloned repository.
+   cd ECE-461-Team-20-Repo
    ```
 
-#### **3. Set Environment Variables**
+### **3. Set Environment Variables**
 1. **`GITHUB_TOKEN`**:  
-   This token allows access to the GitHub API (e.g., for fetching repository data).  
-   You need to generate a [GitHub Personal Access Token](https://github.com/settings/tokens) and then set it using:
+   Generate a [GitHub Personal Access Token](https://github.com/settings/tokens) and set it using:
    ```bash
    export GITHUB_TOKEN=your_personal_access_token_here
    ```
+   
 2. **`LOG_FILE`**:  
-   This specifies the path where log messages will be written. You should set a file path (e.g., `/home/your_username/logs/project.log`).  
-   Example:
+   This specifies the path where log messages will be written. Set a file path (e.g., `/home/your_username/logs/project.log`):
    ```bash
    export LOG_FILE=/home/your_username/logs/project.log
    ```
+
 3. **`LOG_LEVEL`**:  
    This controls the verbosity of log output. Set it according to your preferred level of logging:
    - `0`: Silent (no logging)
@@ -71,28 +65,23 @@ but the auto-grader will run on eceprog.
    ```bash
    npm install
    ```
-   This installs the following packages:
-   - `@octokit/rest` (GitHub API)
-   - `moment` (for time and date calculations)
-   - `typescript`
 
 ### **5. Make Changes and Build**
 
-- If you make any changes to the TypeScript code, you need to compile it into JavaScript. Run:
+- If you make any changes to the TypeScript code, compile it into JavaScript by running:
    ```bash
    npm run build
    ```
-   This compiles all the TypeScript files into JavaScript and places them in the `/dist` directory.
+   This compiles all TypeScript files into JavaScript and places them in the `/dist` directory.
 
 ### **6. Add Shebang to the Compiled JavaScript File**
 
-- To ensure the script can be executed directly from the command line, add the shebang line to the top of the compiled `run` file. Edit the file `dist/run.js` and add the following line at the very beginning:
+- To ensure the script can be executed directly from the command line, add the shebang line to the top of the compiled `run` file. Edit `dist/run.js` and add the following line at the very beginning:
    ```bash
    #!/usr/bin/env node
    ```
-   This tells the system to run the file using Node.js.
 
-### **7. Make Sure the `run` File is Executable**
+### **7. Rename and Make the `run` File Executable**
 
 1. Rename the compiled JavaScript file `run.js` (from `/dist`) to simply `run`:
    ```bash
@@ -104,9 +93,19 @@ but the auto-grader will run on eceprog.
    chmod +x dist/run
    ```
 
-3. Run the `run` executable:
+Sure! Here’s the updated Step 8 with the clarification about making the `run` file executable:
+
+---
+
+### **8. Package the Project**
+
+- To create a packaged executable in the root directory, run the following command:
    ```bash
-   ./dist/run install
-   ./dist/run test
-   ./dist/run /home/shay/a/purdue_username/path_to_cloned_repo/461-project/src/test_urls.txt
+   pkg dist/run.js --targets node16-linux-x64 --output run
+   ```
+   **Note**: You may need to run this command locally on your machine.
+
+- After packaging, make sure the `run` file is executable:
+   ```bash
+   chmod +x run
    ```
