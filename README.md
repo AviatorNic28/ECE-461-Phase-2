@@ -10,14 +10,6 @@ Nicholas Tanzillo ntanzill@purdue.edu
 ## Project Purpose
 The project aims to develop a command-line interface (CLI) tool for ACME Corporation to facilitate the trustworthy reuse of open-source Node.js modules. Addressing concerns from their software architects, the CLI will evaluate modules based on criteria such as ramp-up time, correctness, bus factor, responsiveness, and license compatibility with the GNU Lesser General Public License v2.1. The output will provide users with an overall score and detailed sub-scores for each module, ensuring informed decision-making for future Node.js service developments. This tool will set the groundwork for potential web service integration in future phases.
 
-## Notes (remove later)
-* [Phase 1 Rubric](https://piazza.com/class/lzvpabcdwx83b0/post/94)
-* [syntax checker](https://piazza.com/class/lzvpabcdwx83b0/post/52)
-* [Project Plan](https://docs.google.com/document/d/1XzcjSY4iD0JeGCp3_8yb3W4f8O1s0HRK7Ix6pg2Zano/edit#heading=h.dv1pr3855kek)
-* [Phase 1 SPEC](https://purdue.brightspace.com/d2l/le/content/1096370/viewContent/17430281/View)
-* You can expect the autograder to set up the env variables for you. So your program should only load it from the process.env and not try to load the .env file
-* one more look over all the code (dead code, bad var names/comments, etc.)
-
 ## Setup Instructions
 ### **1. Connect to ECEPROG**
 
