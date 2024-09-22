@@ -93,10 +93,6 @@ The project aims to develop a command-line interface (CLI) tool for ACME Corpora
    chmod +x dist/run
    ```
 
-Sure! Here’s the updated Step 8 with the clarification about making the `run` file executable:
-
----
-
 ### **8. Package the Project**
 
 - To create a packaged executable in the root directory, run the following command:
@@ -108,4 +104,17 @@ Sure! Here’s the updated Step 8 with the clarification about making the `run` 
 - After packaging, make sure the `run` file is executable:
    ```bash
    chmod +x run
+   ```
+
+# **Commands**
+
+- To check how many queries you have left with the GitHub API, use the following command:
+   ```bash
+   curl -H "Authorization: token <GITHUB_TOKEN>" https://api.github.com/rate_limit
+   ```
+
+- After packaging, you can install dependencies and run tests using the following commands:
+   ```bash
+   ./run install  # To install all dependencies
+   ./run test     # To run all tests
    ```
