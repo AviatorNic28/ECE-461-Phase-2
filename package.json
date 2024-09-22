@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "jest"
+    "tests": "jest"
   },
   "author": "Charlie Kim",
   "license": "ISC",

@@ -8,6 +8,7 @@ import { calculateLicenseCompatibility } from './license_compatibility';
 import { calculateRampUpTime } from './rampup_time';
 import { LogLevel } from './logger';
 import logger from './logger'
+import { runCLI } from 'jest';
 import { buffer } from 'stream/consumers';
 
 // Function to install dependencies
@@ -165,20 +166,42 @@ const extractOwnerAndRepo = (url: string): [string | null, string | null] => {
   return match ? [match[1], match[2]] : [null, null];
 };
 
-// Function to run tests
-const runTests = () => {
-  const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
-  if(currentLogLevel == LogLevel.INFO) {
-    logger.info("Running tests...");
-  }    
 
-  // to implement
-  const testCasesPassed = 20; // Mock value
-  const totalTestCases = 25; // Mock value
-  const lineCoverage = 85; // Mock value
-  console.log(`${testCasesPassed}/${totalTestCases} test cases passed. ${lineCoverage}% line coverage achieved.`);
+const runTests = async () => {
+  const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
+  if (currentLogLevel === LogLevel.INFO) {
+    logger.info("Running tests...");
+  }
+
+  try {
+    // Provide Jest options in the first argument with additional fields
+    const jestOptions = {
+      coverage: true,
+      silent: true,
+      _: [], // Required by Argv type
+      $0: 'jest' // Required by Argv type
+    };
+
+    // Run Jest programmatically
+    const { results } = await runCLI(jestOptions, [process.cwd()]);
+
+    const testCasesPassed = results.numPassedTests;
+    const totalTestCases = results.numTotalTests;
+    const lineCoverage = results.coverageMap ? results.coverageMap.getCoverageSummary().lines.pct : 0;
+
+    console.log(`${testCasesPassed}/${totalTestCases} test cases passed. ${lineCoverage}% line coverage achieved.`);
+  } catch (error) {
+    if(currentLogLevel == LogLevel.DEBUG) {
+    console.error('Error running tests:', error);
+    }
+    process.exit(1);
+  }
+
   process.exit(0);
 };
+
+
+
 
 // Main function to handle command line arguments
 const main = () => {

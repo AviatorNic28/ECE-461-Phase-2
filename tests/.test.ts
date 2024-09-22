@@ -4,7 +4,6 @@ import { calculateBusFactor } from '../src/busfactor';
 import { calculateLicenseCompatibility } from '../src/license_compatibility';
 import { calculateRampUpTime } from '../src/rampup_time';
 import { Octokit } from '@octokit/rest';
-import { hasUncaughtExceptionCaptureCallback } from 'process';
 
 describe('Test Suite', () => {
 
