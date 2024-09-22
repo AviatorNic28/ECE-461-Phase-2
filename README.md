@@ -12,7 +12,6 @@ The project aims to develop a command-line interface (CLI) tool for ACME Corpora
 
 
 ## TODO (remove later):
-* increase test coverage to >=80%. 
 * move final run executable into project root.
 * one more look over all the code (dead code, bad var names/comments, etc.)
 

@@ -9,7 +9,6 @@ import { calculateRampUpTime } from './rampup_time';
 import { LogLevel } from './logger';
 import logger from './logger'
 import { runCLI } from 'jest';
-import { buffer } from 'stream/consumers';
 
 // Function to install dependencies
 const installDependencies = () => {
@@ -189,7 +188,8 @@ const runTests = async () => {
     const totalTestCases = results.numTotalTests;
     const lineCoverage = results.coverageMap ? results.coverageMap.getCoverageSummary().lines.pct : 0;
 
-    console.log(`${testCasesPassed}/${totalTestCases} test cases passed. ${lineCoverage}% line coverage achieved.`);
+    const roundedLineCoverage = Math.round(lineCoverage);
+    console.log(`${testCasesPassed}/${totalTestCases} test cases passed. ${roundedLineCoverage}% line coverage achieved.`);
   } catch (error) {
     if(currentLogLevel == LogLevel.DEBUG) {
     console.error('Error running tests:', error);

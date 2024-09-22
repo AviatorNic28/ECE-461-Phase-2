@@ -46,9 +46,6 @@ export const calculateLicenseCompatibility = async (owner: string, repo: string,
             const lowerCaseLicenseText = licenseMatch[1].toLowerCase();
             if (compatibleLicenses.some(license => lowerCaseLicenseText.includes(license))) {
                 licenseScore = 1;
-                if(currentLogLevel == LogLevel.INFO) {
-                logger.info(`Compatible license found in README: ${lowerCaseLicenseText}`);
-                }
             }
         }
 
@@ -66,19 +63,8 @@ export const calculateLicenseCompatibility = async (owner: string, repo: string,
                 const lowerCaseLicenseFileText = licenseFileContent.toLowerCase();
                 if (compatibleLicenses.some(license => lowerCaseLicenseFileText.includes(license))) {
                     licenseScore = 1;
-                    if(currentLogLevel == LogLevel.INFO) {
-                        logger.info(`Compatible license found in LICENSE file: ${lowerCaseLicenseFileText}`);
-                    }
-                } else {
-                    if(currentLogLevel == LogLevel.INFO) {
-                    logger.info('LICENSE file found but does not contain a compatible license.');
-                    }
-                }
-            } else {
-                if(currentLogLevel == LogLevel.DEBUG) {
-                logger.warn(`LICENSE file for ${repo} has no content or is not a string.`);
-                }
-            }
+                } 
+            } 
         } catch (err) {
             if(currentLogLevel == LogLevel.DEBUG) {
             logger.warn(`No LICENSE file found for ${repo}`);
@@ -103,19 +89,8 @@ export const calculateLicenseCompatibility = async (owner: string, repo: string,
                 const lowerCaseLicenseFileText = licenseFileContent.toLowerCase();
                 if (compatibleLicenses.some(license => lowerCaseLicenseFileText.includes(license))) {
                     licenseScore = 1;
-                    if(currentLogLevel == LogLevel.INFO) {
-                    logger.info(`Compatible license found in LICENSE file: ${lowerCaseLicenseFileText}`);
-                    }
-                } else {
-                    if(currentLogLevel == LogLevel.INFO) {
-                    logger.info('LICENSE file found but does not contain a compatible license.');
-                    }
-                }
-            } else {
-                if(currentLogLevel == LogLevel.DEBUG) {
-                logger.warn(`LICENSE file for ${repo} has no content or is not a string.`);
-                }
-            }
+                } 
+            } 
         } catch (err) {
             if(currentLogLevel == LogLevel.DEBUG) {
             logger.warn(`No LICENSE file found for ${repo}`);

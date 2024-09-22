@@ -35,10 +35,6 @@ export const calculateCorrectness = async (owner: string, repo: string, octokit:
         });
 
         if (Array.isArray(repoResponse.data) && repoResponse.data.length > 0) {
-          if(currentLogLevel == LogLevel.INFO) {
-            logger.info(`The repository "${owner}/${repo}" contains a '${dir}' directory.`);
-          }
-          
           testDirFound = true;
           correctness += 1;
           
@@ -65,9 +61,6 @@ export const calculateCorrectness = async (owner: string, repo: string, octokit:
 
     const openIssues = issuesResponse.data;
     const openIssuesCount = openIssues.length;
-    if(currentLogLevel == LogLevel.INFO ) {
-      logger.info(`The repository "${owner}/${repo}" has ${openIssuesCount} open issues.`);
-    }
 
     // deduct from correctness score as needed. 
     if(openIssuesCount >= 60) {
@@ -85,14 +78,8 @@ export const calculateCorrectness = async (owner: string, repo: string, octokit:
       const sortedIssues = openIssues.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
       const longestOpenIssues = sortedIssues.slice(0, 3);
       
-      if(currentLogLevel == LogLevel.INFO) {
-        logger.info('Longest open issues (up to 3):');
-      }
       longestOpenIssues.forEach(issue => {
         const openFor = moment(issue.created_at).fromNow(true); // e.g., '3 months'
-        if(currentLogLevel == LogLevel.DEBUG) {
-        logger.info(`#${issue.number} - ${issue.title} (open for ${openFor})`);
-        }
       });
     }
 

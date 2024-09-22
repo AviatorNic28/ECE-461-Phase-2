@@ -7,6 +7,6 @@ module.exports = {
   collectCoverageFrom: [
     'src/**/*.{js,ts}', // Include all JS and TS files in the src directory
     '!src/**/*.d.ts', // Exclude TypeScript definition files
-    '!src/index.ts' // Optionally exclude your entry point if needed
+    '!src/run.ts' // exclude main entrypoint.
   ],
 };

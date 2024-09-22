@@ -28,9 +28,6 @@ export const calculateRampUpTime = async (owner: string, repo: string, octokit: 
 
         // size (bytes)
         const readmeSize = readmeResponse.data.size; 
-        if(currentLogLevel == LogLevel.INFO) {
-        logger.info(`README size: ${readmeSize} bytes`);
-        }
 
         // Simple scoring based on README size
         if (readmeSize > 10000) {
@@ -48,9 +45,6 @@ export const calculateRampUpTime = async (owner: string, repo: string, octokit: 
         });
 
         const numContributors = contributorsResponse.data.length;
-        if(currentLogLevel == LogLevel.INFO) {
-            logger.info(`Number of contributors: ${numContributors}`);
-        }
 
         // Scoring based on the number of contributors
         if (numContributors > 15) {

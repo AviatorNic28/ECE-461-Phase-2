@@ -52,9 +52,6 @@ export const calculateBusFactor = async (owner: string, repo: string, threshold:
       }
     }
 
-    if(currentLogLevel == LogLevel.INFO) {
-      logger.info(`Bus Factor for repository "${owner}/${repo}" is: ${busFactor}`)
-    }
   } catch (error) {
     if(currentLogLevel == LogLevel.DEBUG) {
       logger.debug('Error calculating Bus Factor:', error);

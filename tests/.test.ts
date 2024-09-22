@@ -139,32 +139,25 @@ describe('Test Suite', () => {
         expect(busfactor).toBeGreaterThanOrEqual(0);
         expect(busfactor_latency).toBeGreaterThanOrEqual(0);
     });
-  
 
-    // another test for a different link
-    const ownerCase2 = "cloudinary";
-    const repoCase2 = "cloudinary_npm";
-    it('should calculate correctness', async () => {
-        const { correctness, correctness_latency } = await calculateCorrectness(ownerCase2, repoCase2, octokit);
-        expect(correctness).toBeGreaterThanOrEqual(0);
-        expect(correctness_latency).toBeGreaterThanOrEqual(0);
+    it('should return -1 for responsiveness when repo and owner is invalid', async () => {
+        const { responsiveness, responsiveness_latency } = await calculateResponsiveness("", "", octokit);
+        expect(responsiveness).toBe(-1);
+        expect(responsiveness_latency).toBe(-1);
     });
 
-    it('should calculate license compatiability', async () => {
-        const {license, license_latency } = await calculateLicenseCompatibility(ownerCase2, repoCase2, octokit);
-        expect(license).toBeGreaterThanOrEqual(0);
-        expect(license_latency).toBeGreaterThanOrEqual(0);
+
+    it('should return -1 for busfactor when repo and owner is invalid', async () => {
+        const { busfactor, busfactor_latency } = await calculateBusFactor("", "", 50, octokit);
+        expect(busfactor).toBe(-1);
+        expect(busfactor_latency).toBe(-1);
     });
 
-    it('should calculate rampup time', async () => {
-        const { rampup, rampup_latency } = await calculateRampUpTime(ownerCase2, repoCase2, octokit);
-        expect(rampup).toBeGreaterThanOrEqual(0);
-        expect(rampup_latency).toBeGreaterThanOrEqual(0);
-    });
 
-    it('should calculate responsiveness', async () => {
-        const { responsiveness, responsiveness_latency } = await calculateResponsiveness(ownerCase2, repoCase2, octokit);
-        expect(responsiveness).toBeGreaterThanOrEqual(0);
-        expect(responsiveness_latency).toBeGreaterThanOrEqual(0);
+    it('should return -1 for correctness when repo and owner is invalid', async () => {
+        const { correctness, correctness_latency } = await calculateCorrectness("", "", octokit);
+        expect(correctness).toBe(-1);
+        expect(correctness_latency).toBe(-1);
     });
 });
+

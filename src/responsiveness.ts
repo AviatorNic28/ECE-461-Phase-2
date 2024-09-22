@@ -60,10 +60,6 @@ export const calculateResponsiveness = async (owner: string, repo: string, octok
       const averageResponseTimeInMs = totalMilliseconds / responseTimestamps.length;
       const averageResponseTimeInHours = averageResponseTimeInMs / (1000 * 60 * 60);
 
-      if (currentLogLevel == LogLevel.INFO) {
-        logger.info(`Average response time for "${owner}/${repo}" is: ${averageResponseTimeInHours.toFixed(2)} hours`);
-      }
-
       // Calculate responsiveness score
       let responsiveScore = -1;
       if (averageResponseTimeInHours <= 24 * 7) {
@@ -87,9 +83,6 @@ export const calculateResponsiveness = async (owner: string, repo: string, octok
         responsiveness_latency: latency,
       };
     } else {
-      if (currentLogLevel == LogLevel.DEBUG) {
-        logger.debug(`No events found for issues in repository "${owner}/${repo}".`);
-      }
 
       return {
         responsiveness: -1,
