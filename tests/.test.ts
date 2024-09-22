@@ -159,5 +159,41 @@ describe('Test Suite', () => {
         expect(correctness).toBe(-1);
         expect(correctness_latency).toBe(-1);
     });
+
+    
+    const ownerTwo = "cloudinary";
+    const repoTwo = "cloudinary_npm";
+
+    it('should calculate BusFactor (case 3)', async () => {
+        const { busfactor, busfactor_latency } = await calculateBusFactor(ownerTwo, repoTwo, 50, octokit);
+        expect(busfactor).toBeDefined();
+        expect(busfactor_latency).toBeDefined();
+    });
+  
+    it('should calculate correctness (case 3)', async () => {
+        const { correctness, correctness_latency } = await calculateCorrectness(ownerTwo, repoTwo, octokit);
+        expect(correctness).toBeDefined();
+        expect(correctness_latency).toBeDefined();
+    });
+
+    it('should calculate license compatiability (case 3)', async () => {
+        const {license, license_latency } = await calculateLicenseCompatibility(ownerTwo, repoTwo, octokit);
+        expect(license).toBeDefined();
+        expect(license_latency).toBeDefined();
+    });
+
+    it('should calculate rampup time (case 3)', async () => {
+        const { rampup, rampup_latency } = await calculateRampUpTime(ownerTwo, repoTwo, octokit);
+        expect(rampup).toBeDefined();
+        expect(rampup_latency).toBeDefined();
+    });
+
+    it('should calculate responsiveness (case 3)', async () => {
+        const { responsiveness, responsiveness_latency } = await calculateResponsiveness(ownerTwo, repoTwo, octokit);
+        expect(responsiveness).toBeDefined();
+        expect(responsiveness_latency).toBeDefined();
+    });
+
+
 });
 

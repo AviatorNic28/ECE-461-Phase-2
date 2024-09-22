@@ -11,9 +11,6 @@ interface metricResult {
 
 export const calculateResponsiveness = async (owner: string, repo: string, octokit: Octokit): Promise<metricResult> => {
   const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
-  if (currentLogLevel == LogLevel.INFO) {
-    logger.info("Running responsiveness metric...");
-  }
 
   // begin measuring latency
   const startTime = performance.now();

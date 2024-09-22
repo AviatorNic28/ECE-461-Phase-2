@@ -12,9 +12,6 @@ interface metricResult {
 export const calculateBusFactor = async (owner: string, repo: string, threshold: number = 50, octokit: Octokit): Promise<metricResult> => {
   // first get log level. 
   const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
-  if(currentLogLevel == LogLevel.INFO) {
-    logger.info('Running Bus Factor metric...')
-  }
 
   // begin tracking latency. 
   const startTime = performance.now();

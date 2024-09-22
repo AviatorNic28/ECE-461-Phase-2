@@ -12,9 +12,6 @@ interface MetricResult {
 export const calculateCorrectness = async (owner: string, repo: string, octokit: Octokit): Promise<MetricResult> => {
   // get log level
   const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
-  if (currentLogLevel === LogLevel.INFO) {
-    logger.info('Running Correctness metric...');
-  }
 
   // begin tracking latency
   const startTime = performance.now();
@@ -71,16 +68,6 @@ export const calculateCorrectness = async (owner: string, repo: string, octokit:
       correctness -= .4;
     } else if(openIssuesCount >= 10) {
       correctness -= .2;
-    }
-
-    // Find the 3 longest open issues
-    if (openIssuesCount > 0) {
-      const sortedIssues = openIssues.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
-      const longestOpenIssues = sortedIssues.slice(0, 3);
-      
-      longestOpenIssues.forEach(issue => {
-        const openFor = moment(issue.created_at).fromNow(true); // e.g., '3 months'
-      });
     }
 
   } catch (error) {

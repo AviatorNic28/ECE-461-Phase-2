@@ -21,9 +21,6 @@ const compatibleLicenses = [
 
 export const calculateLicenseCompatibility = async (owner: string, repo: string, octokit: Octokit): Promise<metricResult> => {
     const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
-    if (currentLogLevel == LogLevel.INFO) {
-        logger.info('Running License Compatibility...');
-    }
 
     // begin tracking latency
     const startTime = performance.now();
@@ -38,7 +35,7 @@ export const calculateLicenseCompatibility = async (owner: string, repo: string,
 
         // convert readMe content from base64 to utf-8 to check for license.
         const readmeContent = Buffer.from(readmeResponse.data.content, 'base64').toString('utf-8');
-        const licenseRegex = /#\s*license\s*([\s\S]*?)(#|$)/i; // Adjusted regex to capture license section more accurately
+        const licenseRegex = /#\s*license\s*([\s\S]*?)(#|$)/i; // Adjusted regex to capture license section 
         const licenseMatch = licenseRegex.exec(readmeContent);
 
         if (licenseMatch) {
@@ -66,15 +63,8 @@ export const calculateLicenseCompatibility = async (owner: string, repo: string,
                 } 
             } 
         } catch (err) {
-            if(currentLogLevel == LogLevel.DEBUG) {
-            logger.warn(`No LICENSE file found for ${repo}`);
-            }
         }
     } catch (err) {
-        if(currentLogLevel == LogLevel.DEBUG) {
-        logger.warn(`No README file found for ${repo}, but will check for LICENSE file.`); 
-        }
-
         // 3. Attempt to check for LICENSE file directly if README is not found
         try {
             const licenseFileResponse = await octokit.repos.getContent({
@@ -92,9 +82,6 @@ export const calculateLicenseCompatibility = async (owner: string, repo: string,
                 } 
             } 
         } catch (err) {
-            if(currentLogLevel == LogLevel.DEBUG) {
-            logger.warn(`No LICENSE file found for ${repo}`);
-            }
         }
     }
 

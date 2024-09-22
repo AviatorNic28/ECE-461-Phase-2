@@ -168,9 +168,6 @@ const extractOwnerAndRepo = (url: string): [string | null, string | null] => {
 
 const runTests = async () => {
   const currentLogLevel = parseInt(process.env.LOG_LEVEL || "0", 10);
-  if (currentLogLevel === LogLevel.INFO) {
-    logger.info("Running tests...");
-  }
 
   try {
     // Provide Jest options in the first argument with additional fields
@@ -181,7 +178,7 @@ const runTests = async () => {
       $0: 'jest' // Required by Argv type
     };
 
-    // Run Jest programmatically
+    // execute jest. 
     const { results } = await runCLI(jestOptions, [process.cwd()]);
 
     const testCasesPassed = results.numPassedTests;
@@ -192,7 +189,7 @@ const runTests = async () => {
     console.log(`${testCasesPassed}/${totalTestCases} test cases passed. ${roundedLineCoverage}% line coverage achieved.`);
   } catch (error) {
     if(currentLogLevel == LogLevel.DEBUG) {
-    console.error('Error running tests:', error);
+    logger.debug('Error running tests:', error);
     }
     process.exit(1);
   }
