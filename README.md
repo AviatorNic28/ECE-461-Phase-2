@@ -106,7 +106,8 @@ The project aims to develop a command-line interface (CLI) tool for ACME Corpora
    ```
 
 - After packaging, you can install dependencies and run tests using the following commands:
-   ```bash
-   ./run install  # To install all dependencies
-   ./run test     # To run all tests
-   ```
+```bash
+./run install  # To install all dependencies
+./run test     # To run all tests
+./run <FILE_PATH>  # To process the file located at FILE_PATH, which contains valid URL(s) to process.
+```
