@@ -14,6 +14,8 @@ The purpose of Phase 2 is to extend the functionality of the CLI tool developed 
 The front end website can be reached by going to the URL <br>
 http://461frontend.s3-website-us-east-1.amazonaws.com/
 
+In order to use the front-end the backend must be turned on. Becasue, AWS cost managment is unfamiliar to us we chose to not leave it on for extended periods. 
+
 Once there, the user has many different actions available to them. 
 
 ### View packages
