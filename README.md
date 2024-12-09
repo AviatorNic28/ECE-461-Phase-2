@@ -19,7 +19,7 @@ In order to use the front-end the backend must be turned on. Becasue, AWS cost m
 Once there, the user has many different actions available to them. 
 
 ### View packages
-Packages are automatically displayed? 
+Packages should be automatically displayed but we ran out of time to implemnt this and test so it could be successful. 
 
 ### Upload
 In the right side of the screen, separated by a black border are input fields. The user must select their package files with the "choose file" button, and then input the name of the module, and the score given by the rating function. (this is confusing to me guys, isnt this a recursive step?)
@@ -28,7 +28,7 @@ In the right side of the screen, separated by a black border are input fields. T
 Once Uploaded, a user can simply press the "rate package" button to rate their package.
 
 ### Download
-placeholder
+This API is connected to each module ID and downlaod the content of the module registered to the name displayed. 
 
 ## API call setup/guide
 https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod - Main API Gateway
