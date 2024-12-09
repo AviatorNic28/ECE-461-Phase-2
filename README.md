@@ -52,5 +52,6 @@ https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package/search - GET
 https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/reset - GET Reset packages 
 
 
-Example call to check endpoint (this example is for getting list of packages): 
+Example call to check endpoint (this example is for getting list of packages):
+
 curl -X GET "https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package"
