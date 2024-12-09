@@ -32,15 +32,26 @@ placeholder
 
 ## API call setup/guide
 https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod - Main API Gateway
+
 https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package - GET List all packages
+
 https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package - POST Upload packages
+
 https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package/{id}  - PUT Update package 
+
 https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package/{id}/cost - GET Cost of packages
+
 https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package/{id}/download - GET Download packages
+
 https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package/{id}/rate - GET Rate packages
+
 https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package/ingest - POST Ingest packages
+
 https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package/search - GET Search packages
+
 https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/reset - GET Reset packages 
 
-Example call to check endpoint (this example is for getting list of packages): 
+
+Example call to check endpoint (this example is for getting list of packages):
+
 curl -X GET "https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package"
