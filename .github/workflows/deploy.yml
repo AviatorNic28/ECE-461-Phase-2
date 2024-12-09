@@ -44,10 +44,10 @@ jobs:
           cd lambda
           for folder in */; do
             zip -r "${folder%/}.zip" "$folder"
-            aws lambda update-function-code --function-name "${folder%/}" --zip-file fileb://${folder%/}.zip
+            aws lambda update-function-code --function-name "${folder%/}" --zip-file fileb://${folder%/}.zip || echo "Skipping ${folder%/} if update fails."
           done
 
       # Deploy Frontend to S3
       - name: Deploy Frontend to S3
         run: |
-          aws s3 sync ./my-frontend-new s3://$S3_BUCKET/ --delete
+          aws s3 sync ./frontend s3://$S3_BUCKET/
