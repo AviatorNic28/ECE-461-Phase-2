@@ -14,14 +14,33 @@ The purpose of Phase 2 is to extend the functionality of the CLI tool developed 
 The front end website can be reached by going to the URL <br>
 http://461frontend.s3-website-us-east-1.amazonaws.com/
 
+In order to use the front-end the backend must be turned on. Becasue, AWS cost managment is unfamiliar to us we chose to not leave it on for extended periods. 
+
 Once there, the user has many different actions available to them. 
-# View packages
 
-# Upload
+### View packages
+Packages are automatically displayed? 
 
-# Rate
+### Upload
+In the right side of the screen, separated by a black border are input fields. The user must select their package files with the "choose file" button, and then input the name of the module, and the score given by the rating function. (this is confusing to me guys, isnt this a recursive step?)
 
-# Download
+### Rate
+Once Uploaded, a user can simply press the "rate package" button to rate their package.
+
+### Download
+placeholder
 
 ## API call setup/guide
-placeholder
+https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod - Main API Gateway
+https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package - GET List all packages
+https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package - POST Upload packages
+https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package/{id}  - PUT Update package 
+https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package/{id}/cost - GET Cost of packages
+https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package/{id}/download - GET Download packages
+https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package/{id}/rate - GET Rate packages
+https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package/ingest - POST Ingest packages
+https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package/search - GET Search packages
+https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/reset - GET Reset packages 
+
+Example call to check endpoint (this example is for getting list of packages): 
+curl -X GET "https://qpzws2yebl.execute-api.us-east-1.amazonaws.com/prod/package"
