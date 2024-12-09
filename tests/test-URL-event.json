@@ -1,0 +1,19 @@
+{
+    "resource": "/{proxy+}",
+    "path": "/generate-url",
+    "httpMethod": "POST",
+    "headers": {
+      "X-Authorization": "Bearer someAccessToken",
+      "Content-Type": "application/json"
+    },
+    "queryStringParameters": null,
+    "pathParameters": null,
+    "stageVariables": null,
+    "requestContext": {
+      "resourcePath": "/generate-url",
+      "httpMethod": "POST",
+      "path": "/prod/generate-url"
+    },
+    "body": "{\"moduleName\": \"example-module\",  \"fileName\": \"example-package.zip\", \"fileType\": \"zip\", \"rating\": \"5\"}",
+    "isBase64Encoded": false
+  }
