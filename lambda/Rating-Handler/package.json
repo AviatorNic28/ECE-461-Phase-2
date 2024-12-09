@@ -1,0 +1,15 @@
+{
+  "name": "rating-handler-91f6afa5-0248-4dec-b656-25fbb5476152",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "aws-sdk": "^2.1692.0"
+  }
+}
