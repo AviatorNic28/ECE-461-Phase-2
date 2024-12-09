@@ -15,13 +15,18 @@ The front end website can be reached by going to the URL <br>
 http://461frontend.s3-website-us-east-1.amazonaws.com/
 
 Once there, the user has many different actions available to them. 
-# View packages
 
-# Upload
+### View packages
+Packages are automatically displayed? 
 
-# Rate
+### Upload
+In the right side of the screen, separated by a black border are input fields. The user must select their package files with the "choose file" button, and then input the name of the module, and the score given by the rating function. (this is confusing to me guys, isnt this a recursive step?)
 
-# Download
+### Rate
+Once Uploaded, a user can simply press the "rate package" button to rate their package.
+
+### Download
+placeholder
 
 ## API call setup/guide
 placeholder
