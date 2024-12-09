@@ -50,4 +50,4 @@ jobs:
       # Deploy Frontend to S3
       - name: Deploy Frontend to S3
         run: |
-          aws s3 sync ./frontend s3://$S3_BUCKET/
+          aws s3 sync ./my-frontend-new s3://$S3_BUCKET/
